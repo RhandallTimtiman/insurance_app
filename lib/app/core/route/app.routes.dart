@@ -9,5 +9,9 @@ class AppRoutes {
       name: '/list',
       page: () => const ReservationListingScreen(),
     ),
+    GetPage(
+      name: '/details',
+      page: () => const ReservationDetailsScreen(),
+    ),
   ];
 }
