@@ -98,9 +98,9 @@ class InsuranceTile extends StatelessWidget {
                             width: 125,
                             decoration: const BoxDecoration(
                               color: Color.fromRGBO(
-                                41,
-                                50,
-                                64,
+                                2,
+                                39,
+                                108,
                                 1,
                               ),
                               borderRadius: BorderRadius.all(

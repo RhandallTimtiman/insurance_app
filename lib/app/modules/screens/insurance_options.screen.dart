@@ -40,9 +40,9 @@ class _InsuranceOptionsScreenState extends State<InsuranceOptionsScreen> {
         ),
       ),
       backgroundColor: const Color.fromRGBO(
-        41,
-        50,
-        64,
+        2,
+        39,
+        108,
         1,
       ),
       body: SizedBox(
@@ -57,9 +57,9 @@ class _InsuranceOptionsScreenState extends State<InsuranceOptionsScreen> {
               ),
               height: 80,
               color: const Color.fromRGBO(
-                41,
-                50,
-                64,
+                2,
+                39,
+                108,
                 1,
               ),
               child: Row(

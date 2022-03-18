@@ -16,9 +16,9 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       elevation: 0,
       backgroundColor: const Color.fromRGBO(
-        41,
-        50,
-        64,
+        2,
+        39,
+        108,
         1,
       ),
       title: title,

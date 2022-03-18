@@ -27,9 +27,9 @@ class _ReservationDetailsScreenState extends State<ReservationDetailsScreen> {
         ),
       ),
       backgroundColor: const Color.fromRGBO(
-        41,
-        50,
-        64,
+        2,
+        39,
+        108,
         1,
       ),
       body: SizedBox(
@@ -44,9 +44,9 @@ class _ReservationDetailsScreenState extends State<ReservationDetailsScreen> {
               ),
               height: 80,
               color: const Color.fromRGBO(
-                41,
-                50,
-                64,
+                2,
+                39,
+                108,
                 1,
               ),
               child: Row(
@@ -240,9 +240,9 @@ class _ReservationDetailsScreenState extends State<ReservationDetailsScreen> {
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(
                     const Color.fromRGBO(
-                      41,
-                      50,
-                      64,
+                      2,
+                      39,
+                      108,
                       1,
                     ),
                   ),

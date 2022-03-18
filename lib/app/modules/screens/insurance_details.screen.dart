@@ -35,9 +35,9 @@ class _InsuranceDetailsScreenState extends State<InsuranceDetailsScreen> {
         ),
       ),
       backgroundColor: const Color.fromRGBO(
-        41,
-        50,
-        64,
+        2,
+        39,
+        108,
         1,
       ),
       body: SizedBox(
@@ -52,9 +52,9 @@ class _InsuranceDetailsScreenState extends State<InsuranceDetailsScreen> {
               ),
               height: 80,
               color: const Color.fromRGBO(
-                41,
-                50,
-                64,
+                2,
+                39,
+                108,
                 1,
               ),
               child: Row(
@@ -182,12 +182,69 @@ class _InsuranceDetailsScreenState extends State<InsuranceDetailsScreen> {
                                 ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: const [
-                                    ContainerTile(),
-                                    SizedBox(
+                                  children: [
+                                    const ContainerTile(),
+                                    const SizedBox(
                                       height: 15,
                                     ),
-                                    ContainerTile(),
+                                    const ContainerTile(),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Divider(
+                                      color: Colors.grey[500],
+                                    ),
+                                    IntrinsicHeight(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const SizedBox(
+                                            width: 20,
+                                          ),
+                                          const SizedBox(
+                                            width: 30,
+                                          ),
+                                          const Expanded(
+                                            flex: 1,
+                                            child: Text(''),
+                                          ),
+                                          Expanded(
+                                            flex: 1,
+                                            child: Row(
+                                              children: const [
+                                                Text(
+                                                  'Total:',
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Text(
+                                                  'PHP 123,088',
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Container(
+                                            width: 10,
+                                            color: const Color.fromRGBO(
+                                              244,
+                                              190,
+                                              11,
+                                              1,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
                                   ],
                                 ),
                               ),
@@ -249,9 +306,9 @@ class _InsuranceDetailsScreenState extends State<InsuranceDetailsScreen> {
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(
                     const Color.fromRGBO(
-                      41,
-                      50,
-                      64,
+                      2,
+                      39,
+                      108,
                       1,
                     ),
                   ),
