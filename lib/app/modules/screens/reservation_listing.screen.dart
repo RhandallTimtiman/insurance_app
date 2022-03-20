@@ -17,15 +17,8 @@ class _ReservationListingScreenState extends State<ReservationListingScreen> {
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: const Color.fromRGBO(
-          41,
-          50,
-          64,
-          1,
-        ),
-        title: const Text(
+      appBar: const MainAppBar(
+        title: Text(
           'Reservation List',
           style: TextStyle(
             fontSize: 15,
@@ -33,7 +26,6 @@ class _ReservationListingScreenState extends State<ReservationListingScreen> {
             color: Colors.white,
           ),
         ),
-        centerTitle: true,
       ),
       body: Container(
         height: size.height,

@@ -13,5 +13,13 @@ class AppRoutes {
       name: '/details',
       page: () => const ReservationDetailsScreen(),
     ),
+    GetPage(
+      name: '/insurance-options',
+      page: () => const InsuranceOptionsScreen(),
+    ),
+    // GetPage(
+    //   name: '/insurance-details',
+    //   page: () => const InsuranceDetailsScreen(),
+    // ),
   ];
 }
