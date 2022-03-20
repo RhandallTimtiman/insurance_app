@@ -14,8 +14,16 @@ class AppRoutes {
       page: () => const ReservationDetailsScreen(),
     ),
     GetPage(
-      name: '/cpf',
-      page: () => const ContainerProtectionScreen(),
-    )
+      name: '/insurance-options',
+      page: () => const InsuranceOptionsScreen(),
+    ),
+    GetPage(
+      name: '/payment-summary',
+      page: () => const PaymentSummaryScreen(),
+    ),
+    // GetPage(
+    //   name: '/insurance-details',
+    //   page: () => const InsuranceDetailsScreen(),
+    // ),
   ];
 }

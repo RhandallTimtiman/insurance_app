@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:insurance_app/app/core/route/app.routes.dart';
@@ -21,7 +19,7 @@ class _MyAppState extends State<MyApp> {
     return GetMaterialApp(
       locale: Get.deviceLocale,
       fallbackLocale: const Locale('en', 'US'),
-      initialRoute: '/cpf',
+      initialRoute: '/list',
       getPages: AppRoutes.routes,
       debugShowCheckedModeBanner: false,
     );
