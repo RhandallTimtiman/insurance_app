@@ -13,5 +13,9 @@ class AppRoutes {
       name: '/details',
       page: () => const ReservationDetailsScreen(),
     ),
+    GetPage(
+      name: '/cpf',
+      page: () => const ContainerProtectionScreen(),
+    )
   ];
 }
