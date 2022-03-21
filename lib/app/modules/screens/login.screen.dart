@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../widgets/widgets.dart';
+import 'package:insurance_app/app/domain/controller/controllers.dart';
+import 'package:insurance_app/app/widgets/widgets.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -11,6 +11,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  AuthController authController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -41,50 +43,53 @@ class _LoginScreenState extends State<LoginScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: const [
-                      Text(
-                        'PHILIPPINE',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromRGBO(
-                            2,
-                            39,
-                            108,
-                            1,
+                  Form(
+                    key: authController.authFormKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: const [
+                        Text(
+                          'PHILIPPINE',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromRGBO(
+                              2,
+                              39,
+                              108,
+                              1,
+                            ),
                           ),
                         ),
-                      ),
-                      Text(
-                        'PORTS',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromRGBO(
-                            2,
-                            39,
-                            108,
-                            1,
+                        Text(
+                          'PORTS',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromRGBO(
+                              2,
+                              39,
+                              108,
+                              1,
+                            ),
                           ),
                         ),
-                      ),
-                      Text(
-                        'AUTHORITY',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromRGBO(
-                            2,
-                            39,
-                            108,
-                            1,
+                        Text(
+                          'AUTHORITY',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromRGBO(
+                              2,
+                              39,
+                              108,
+                              1,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   const Image(
                     image: AssetImage('assets/images/PPA-Logo@2x.png'),
@@ -96,24 +101,24 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 20,
               ),
-              const AuthInput(
-                // prefixIcon: 'assets/icons/user-name.png',
-                // controller: authController.userNameController,
+              AuthInput(
+                controller: authController.userNameController,
                 hint: 'Username',
                 isPassword: false,
                 obscure: false,
-                // toggle: authController.toggle,
+                toggle: authController.toggle,
               ),
               const SizedBox(
                 height: 20,
               ),
-              const AuthInput(
-                // prefixIcon: 'assets/icons/user-name.png',
-                // controller: authController.userNameController,
-                hint: 'Password',
-                isPassword: true,
-                obscure: false,
-                // toggle: authController.toggle,
+              Obx(
+                () => AuthInput(
+                  controller: authController.passwordController,
+                  hint: 'Password',
+                  isPassword: true,
+                  obscure: authController.obscureText.value,
+                  toggle: authController.toggle,
+                ),
               ),
               const SizedBox(
                 height: 20,
@@ -135,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: const Color.fromRGBO(244, 190, 11, 1),
                   child: MaterialButton(
                     minWidth: size.width,
-                    onPressed: () => {Get.toNamed('service-option')},
+                    onPressed: () => authController.signIn(),
                     child: const Text(
                       'Login',
                       textAlign: TextAlign.center,

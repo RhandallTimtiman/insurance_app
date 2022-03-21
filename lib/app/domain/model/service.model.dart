@@ -2,7 +2,7 @@ class Service {
   String? code;
   String? companyServiceId;
   String? imageURL;
-  String? name;
+  late String name;
   String? serviceId;
   int? staticId;
   int? status;
@@ -10,8 +10,8 @@ class Service {
   Service({
     this.code,
     this.companyServiceId,
-    this.imageURL,
-    this.name,
+    this.imageURL = '',
+    this.name = '',
     this.serviceId,
     this.staticId,
     this.status,

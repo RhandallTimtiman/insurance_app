@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:insurance_app/app/core/route/app.routes.dart';
+import 'package:insurance_app/app/modules/binding/bindings.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -22,6 +23,7 @@ class _MyAppState extends State<MyApp> {
       initialRoute: '/login',
       getPages: AppRoutes.routes,
       debugShowCheckedModeBanner: false,
+      initialBinding: MainBinding(),
     );
   }
 }

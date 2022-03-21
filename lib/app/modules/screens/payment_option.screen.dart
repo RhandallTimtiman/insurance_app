@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../widgets/widgets.dart';
+import 'package:insurance_app/app/widgets/widgets.dart';
 
 class PaymentOptionScreen extends StatefulWidget {
   const PaymentOptionScreen({Key? key}) : super(key: key);

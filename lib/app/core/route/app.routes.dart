@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:insurance_app/app/modules/binding/bindings.dart';
 import 'package:insurance_app/app/modules/screens/screens.dart';
 
 class AppRoutes {
@@ -8,6 +9,7 @@ class AppRoutes {
     GetPage(
       name: '/login',
       page: () => const LoginScreen(),
+      binding: AuthBinding(),
     ),
     GetPage(
       name: '/service-option',

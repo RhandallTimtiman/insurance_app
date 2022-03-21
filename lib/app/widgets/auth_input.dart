@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class AuthInput extends StatelessWidget {
-  // final TextEditingController controller;
+  final TextEditingController controller;
   final bool obscure;
   final String hint;
-  // final VoidCallback toggle;
+  final VoidCallback toggle;
   final bool isPassword;
   // final String prefixIcon;
 
   const AuthInput({
     Key? key,
-    // required this.controller,
+    required this.controller,
     required this.hint,
     required this.obscure,
-    // required this.toggle,
+    required this.toggle,
     required this.isPassword,
     // required this.prefixIcon,
   }) : super(key: key);
@@ -25,21 +25,13 @@ class AuthInput extends StatelessWidget {
       padding: const EdgeInsets.only(left: 20, right: 20),
       child: TextFormField(
         textInputAction: TextInputAction.next,
-        inputFormatters: isPassword
-            ? <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly,
-              ]
-            : null,
         maxLength: 32,
-        keyboardType: isPassword
-            ? const TextInputType.numberWithOptions(
-                signed: true,
-                decimal: true,
-              )
-            : null,
-        // controller: controller,
+        controller: controller,
         obscureText: obscure,
-        style: const TextStyle(fontSize: 14, color: Colors.white),
+        style: const TextStyle(
+          fontSize: 14,
+          color: Colors.black,
+        ),
         decoration: InputDecoration(
           counterStyle: const TextStyle(
             height: double.minPositive,
@@ -84,10 +76,10 @@ class AuthInput extends StatelessWidget {
                     child: IconButton(
                       icon: Icon(
                         obscure ? Icons.visibility : Icons.visibility_off,
-                        color: Colors.black,
+                        color: Colors.grey,
                         size: 24.0,
                       ),
-                      onPressed: () {},
+                      onPressed: toggle,
                     ),
                   ),
                   padding: const EdgeInsets.only(left: 10, right: 10),
