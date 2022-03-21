@@ -1,3 +1,6 @@
 abstract class IAuthInterface {
-  Future getData();
+  Future signIn({
+    required userName,
+    required password,
+  });
 }

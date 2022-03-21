@@ -9,9 +9,8 @@ class AuthService implements IAuthInterface {
   final dbHelper = DatabaseHelper.instance;
 
   @override
-  Future getData() async {
-    // TODO: implement getData
-    print('haw haw de karabao');
-    return "hello";
+  Future signIn({required userName, required password}) {
+    // TODO: implement signIn
+    throw UnimplementedError();
   }
 }
