@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:insurance_app/app/widgets/widgets.dart';
@@ -334,7 +332,9 @@ class _InsuranceDetailsScreenState extends State<InsuranceDetailsScreen> {
                     ),
                   ],
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Get.toNamed('/payment-summary');
+                },
               ),
             ],
           ),

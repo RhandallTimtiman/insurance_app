@@ -19,7 +19,7 @@ class _MyAppState extends State<MyApp> {
     return GetMaterialApp(
       locale: Get.deviceLocale,
       fallbackLocale: const Locale('en', 'US'),
-      initialRoute: '/list',
+      initialRoute: '/login',
       getPages: AppRoutes.routes,
       debugShowCheckedModeBanner: false,
     );

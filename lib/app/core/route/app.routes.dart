@@ -6,6 +6,14 @@ class AppRoutes {
 
   static final routes = [
     GetPage(
+      name: '/login',
+      page: () => const LoginScreen(),
+    ),
+    GetPage(
+      name: '/service-option',
+      page: () => const LoginServiceOptionScreen(),
+    ),
+    GetPage(
       name: '/list',
       page: () => const ReservationListingScreen(),
     ),
@@ -16,6 +24,14 @@ class AppRoutes {
     GetPage(
       name: '/insurance-options',
       page: () => const InsuranceOptionsScreen(),
+    ),
+    GetPage(
+      name: '/payment-summary',
+      page: () => const PaymentSummaryScreen(),
+    ),
+    GetPage(
+      name: '/payment-option',
+      page: () => const PaymentOptionScreen(),
     ),
     // GetPage(
     //   name: '/insurance-details',
