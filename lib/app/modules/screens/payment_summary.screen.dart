@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:insurance_app/app/widgets/widgets.dart';
 
 class PaymentSummaryScreen extends StatefulWidget {
@@ -35,9 +36,24 @@ class _PaymentSummaryScreenState extends State<PaymentSummaryScreen> {
         {'number': 'CN404567', 'fee': '300'}
       ],
       'totalFeePerContainer': "PHP 500.00"
+    },
+    {
+      'name': " 40' Dry Storage ",
+      'containerList': [
+        {'number': 'CN401231', 'fee': '200'},
+        {'number': 'CN404567', 'fee': '300'}
+      ],
+      'totalFeePerContainer': "PHP 500.00"
+    },
+    {
+      'name': " 40' Dry Storage ",
+      'containerList': [
+        {'number': 'CN401231', 'fee': '200'},
+        {'number': 'CN404567', 'fee': '300'}
+      ],
+      'totalFeePerContainer': "PHP 500.00"
     }
   ];
-
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -112,6 +128,7 @@ class _PaymentSummaryScreenState extends State<PaymentSummaryScreen> {
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -169,282 +186,257 @@ class _PaymentSummaryScreenState extends State<PaymentSummaryScreen> {
                           ],
                         ),
                         const SizedBox(
-                          height: 15,
+                          height: 25,
                         ),
-                        SizedBox(
-                          width: size.width,
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            Expanded(
+                              flex: 1,
+                              child: Divider(
+                                color: Colors.grey,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'Invoice Details',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Divider(
+                                color: Colors.grey,
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const Text(
+                          'Fees',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          color: Colors.white,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: const [
-                                  Expanded(
-                                    flex: 1,
-                                    child: Divider(
-                                      color: Colors.grey,
-                                    ),
+                            children: container.map(
+                              (e) {
+                                var containerInfo = e;
+                                List<dynamic> containerList =
+                                    e['containerList'];
+
+                                return PaymentContainerTile(
+                                  containerInfo: containerInfo,
+                                  containerList: containerList,
+                                );
+                              },
+                            ).toList(),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Card(
+                          margin: const EdgeInsets.only(top: 4, bottom: 4),
+                          child: IntrinsicHeight(
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 10,
+                                  color: const Color.fromRGBO(
+                                    244,
+                                    190,
+                                    11,
+                                    1,
                                   ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    'Invoice Details',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Expanded(
-                                    flex: 1,
-                                    child: Divider(
-                                      color: Colors.grey,
-                                    ),
-                                  )
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              const Text(
-                                'Fees',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              SizedBox(
-                                height: 250,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                      child: ListView.separated(
-                                        separatorBuilder: (ctx, index) {
-                                          return const SizedBox(
-                                            height: 10,
-                                          );
-                                        },
-                                        shrinkWrap: true,
-                                        itemCount: container.length,
-                                        itemBuilder: (ctx, index) {
-                                          var containerInfo = container[index];
-                                          List<dynamic> containerList =
-                                              containerInfo['containerList'];
-                                          return PaymentContainerTile(
-                                            containerInfo: containerInfo,
-                                            containerList: containerList,
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Card(
-                                child: IntrinsicHeight(
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        width: 10,
-                                        color: const Color.fromRGBO(
-                                          244,
-                                          190,
-                                          11,
-                                          1,
+                                Expanded(
+                                  child: Container(
+                                    padding: const EdgeInsets.all(12),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: const [
+                                            Text(
+                                              'Subtotal:',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                      Expanded(
-                                        child: Container(
-                                          padding: const EdgeInsets.all(12),
+                                        const Text(
+                                          'PHP 1000.00',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Card(
+                          margin: const EdgeInsets.only(top: 4, bottom: 4),
+                          child: IntrinsicHeight(
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 10,
+                                  color: const Color.fromRGBO(
+                                    244,
+                                    190,
+                                    11,
+                                    1,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    padding: const EdgeInsets.all(12),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: const [
+                                            Text(
+                                              'Total Tax:',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            Text(
+                                              'PHP 2000.00',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Container(
+                                          padding: const EdgeInsets.only(
+                                            top: 12,
+                                            left: 12,
+                                          ),
                                           child: Row(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                                MainAxisAlignment.spaceEvenly,
                                             children: [
-                                              Row(
-                                                children: const [
-                                                  Text(
-                                                    'Subtotal:',
-                                                    style: TextStyle(
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              const Text(
-                                                'PHP 1000.00',
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Card(
-                                child: IntrinsicHeight(
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        width: 10,
-                                        color: const Color.fromRGBO(
-                                          244,
-                                          190,
-                                          11,
-                                          1,
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Container(
-                                          padding: const EdgeInsets.all(12),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Row(
+                                              Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
                                                 children: const [
                                                   Text(
-                                                    'Total Tax:',
+                                                    'Taxable Amount:',
                                                     style: TextStyle(
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      fontSize: 10,
                                                     ),
                                                   ),
                                                   Text(
-                                                    'PHP 2000.00',
+                                                    'Add Tax:',
                                                     style: TextStyle(
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      fontSize: 10,
                                                     ),
                                                   ),
                                                 ],
                                               ),
-                                              Container(
-                                                padding: const EdgeInsets.only(
-                                                  top: 12,
-                                                  left: 12,
-                                                ),
-                                                child: Row(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
-                                                  children: [
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: const [
-                                                        Text(
-                                                          'Taxable Amount:',
-                                                          style: TextStyle(
-                                                            fontSize: 10,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          'Add Tax:',
-                                                          style: TextStyle(
-                                                            fontSize: 10,
-                                                          ),
-                                                        ),
-                                                      ],
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: const [
+                                                  Text(
+                                                    '1000 Per Container',
+                                                    style: TextStyle(
+                                                      fontSize: 10,
                                                     ),
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: const [
-                                                        Text(
-                                                          '1000 Per Container',
-                                                          style: TextStyle(
-                                                            fontSize: 10,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          '1000 Per Container',
-                                                          style: TextStyle(
-                                                              fontSize: 10),
-                                                        ),
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
+                                                  ),
+                                                  Text(
+                                                    '1000 Per Container',
+                                                    style:
+                                                        TextStyle(fontSize: 10),
+                                                  ),
+                                                ],
                                               )
                                             ],
                                           ),
-                                        ),
-                                      ),
-                                    ],
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Divider(
-                                color: Colors.grey[500],
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: const [
-                                  Text(
-                                    'Total Invoice Amount:',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    'PHP 1000.00',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Divider(
-                                color: Colors.grey[500],
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        )
+                        ),
+                        Divider(
+                          color: Colors.grey[500],
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const [
+                            Text(
+                              'Total Invoice Amount:',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              'PHP 1000.00',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Divider(
+                          color: Colors.grey[500],
+                        ),
                       ],
                     ),
                   ),
@@ -456,26 +448,26 @@ class _PaymentSummaryScreenState extends State<PaymentSummaryScreen> {
       ),
       bottomNavigationBar: BottomAppBar(
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: const EdgeInsets.all(10),
           color: Colors.white,
           height: 70,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              const Text(
-                'Grand Total: PHP 4000.00',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromRGBO(
-                    2,
-                    39,
-                    108,
-                    1,
-                  ),
-                ),
-              ),
+              // const Text(
+              //   'Grand Total: PHP 4000.00',
+              //   style: TextStyle(
+              //     fontSize: 16,
+              //     fontWeight: FontWeight.bold,
+              //     color: Color.fromRGBO(
+              //       2,
+              //       39,
+              //       108,
+              //       1,
+              //     ),
+              //   ),
+              // ),
               ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(
@@ -495,7 +487,7 @@ class _PaymentSummaryScreenState extends State<PaymentSummaryScreen> {
                 child: Row(
                   children: const [
                     Text(
-                      'Pay Now',
+                      'Select Payment Option',
                       style: TextStyle(
                         fontSize: 15,
                       ),
@@ -508,7 +500,9 @@ class _PaymentSummaryScreenState extends State<PaymentSummaryScreen> {
                     ),
                   ],
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Get.toNamed('/payment-option');
+                },
               ),
             ],
           ),
