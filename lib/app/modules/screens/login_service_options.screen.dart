@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:insurance_app/app/widgets/widgets.dart';
 
@@ -12,72 +14,152 @@ class LoginServiceOptionScreen extends StatefulWidget {
 class _LoginServiceOptionScreenState extends State<LoginServiceOptionScreen> {
   List<dynamic> services = [
     {
-      'serviceName': 'Shipping Line',
+      'serviceName': 'Customs Broker',
       'image':
           'https://www.logolynx.com/images/logolynx/83/83a2affc03c2ae88c42b1c3ffcc7b509.jpeg'
     },
     {
-      'serviceName': 'Shipping Agency',
+      'serviceName': 'Freight Forwarder',
       'image':
           'https://www.logolynx.com/images/logolynx/83/83a2affc03c2ae88c42b1c3ffcc7b509.jpeg'
     },
     {
-      'serviceName': 'Trucking',
+      'serviceName': 'Shipper/Consignee',
       'image':
           'https://www.logolynx.com/images/logolynx/83/83a2affc03c2ae88c42b1c3ffcc7b509.jpeg'
     }
   ];
-  bool isHovered = false;
-  void onEntered(bool isHovered) => setState(() {
-        this.isHovered = isHovered;
-      });
+
   @override
   Widget build(BuildContext context) {
-    final hoveredTransform = Matrix4.identity()..scale(1.5);
-    final transform = isHovered ? hoveredTransform : Matrix4.identity();
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          height: size.height,
-          width: size.width,
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              stops: [
-                -0.026,
-                0.98,
-                1.0,
-              ],
-              begin: Alignment.bottomCenter,
-              end: Alignment.topCenter,
-              colors: [
-                Color(0xFF02276c),
-                Color(0xFFffffff),
-                Color(0xFFffffff),
-              ],
-            ),
+      body: Container(
+        height: size.height,
+        width: size.width,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            stops: [
+              -0.026,
+              0.98,
+              1.0,
+            ],
+            begin: Alignment.bottomCenter,
+            end: Alignment.topCenter,
+            colors: [
+              Color(0xFF02276c),
+              Color(0xFFffffff),
+              Color(0xFFffffff),
+            ],
           ),
-          child: Center(
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: services.length,
-              itemBuilder: ((context, index) {
-                return Center(
-                  child: MouseRegion(
-                    onEnter: ((event) => (onEntered)(true)),
-                    onExit: ((event) => onEntered(false)),
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      transform: transform,
-                      child: ServiceOptionTile(
-                        serviceDetails: services[index],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: SafeArea(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: size.width * 0.97,
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'LOGIN AS',
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromRGBO(
+                                2,
+                                39,
+                                108,
+                                1,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              Expanded(
+                                flex: 1,
+                                child: Divider(
+                                  thickness: 2,
+                                  color: Color.fromRGBO(
+                                    2,
+                                    39,
+                                    108,
+                                    1,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Text(
+                                'Services',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromRGBO(
+                                    2,
+                                    39,
+                                    108,
+                                    1,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Divider(
+                                  thickness: 2,
+                                  color: Color.fromRGBO(
+                                    2,
+                                    39,
+                                    108,
+                                    1,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Column(
+                            children: services.map((e) {
+                              return Column(
+                                children: [
+                                  ServiceOptionTile(serviceDetails: e),
+                                  const SizedBox(
+                                    height: 10,
+                                  )
+                                ],
+                              );
+                            }).toList(),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                );
-              }),
+                  ],
+                ),
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

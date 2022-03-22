@@ -13,31 +13,49 @@ class ServiceOptionTile extends StatefulWidget {
 class _ServiceOptionTileState extends State<ServiceOptionTile> {
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return GestureDetector(
-      onTap: (() => Get.toNamed('/list')),
+      onDoubleTap: (() => Get.toNamed('/list')),
       child: Card(
-        child: Container(
-          padding: const EdgeInsets.all(12),
-          width: 120,
-          child: Column(
-            children: [
-              SizedBox(
-                width: 60,
-                height: 60,
-                child: Image.network(
-                  widget.serviceDetails['image'],
-                  fit: BoxFit.fill,
+        elevation: 10,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 100,
+                  height: 100,
+                  child: Image.network(
+                    widget.serviceDetails['image'],
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              height: size.height * 0.05,
+              width: double.infinity,
+              color: const Color.fromRGBO(
+                2,
+                39,
+                108,
+                1,
+              ),
+              child: Center(
+                child: Text(
+                  widget.serviceDetails['serviceName'].toString(),
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                widget.serviceDetails['serviceName'],
-                style: const TextStyle(fontSize: 12),
-              )
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );
