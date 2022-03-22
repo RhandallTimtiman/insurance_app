@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:insurance_app/app/domain/controller/controllers.dart';
 import 'package:insurance_app/app/widgets/widgets.dart';
 
 class LoginServiceOptionScreen extends StatefulWidget {
@@ -12,27 +14,10 @@ class LoginServiceOptionScreen extends StatefulWidget {
 }
 
 class _LoginServiceOptionScreenState extends State<LoginServiceOptionScreen> {
-  List<dynamic> services = [
-    {
-      'serviceName': 'Customs Broker',
-      'image':
-          'https://www.logolynx.com/images/logolynx/83/83a2affc03c2ae88c42b1c3ffcc7b509.jpeg'
-    },
-    {
-      'serviceName': 'Freight Forwarder',
-      'image':
-          'https://www.logolynx.com/images/logolynx/83/83a2affc03c2ae88c42b1c3ffcc7b509.jpeg'
-    },
-    {
-      'serviceName': 'Shipper/Consignee',
-      'image':
-          'https://www.logolynx.com/images/logolynx/83/83a2affc03c2ae88c42b1c3ffcc7b509.jpeg'
-    }
-  ];
-
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+
     return Scaffold(
       body: Container(
         height: size.height,
@@ -140,18 +125,35 @@ class _LoginServiceOptionScreenState extends State<LoginServiceOptionScreen> {
                           const SizedBox(
                             height: 20,
                           ),
-                          Column(
-                            children: services.map((e) {
-                              return Column(
-                                children: [
-                                  ServiceOptionTile(serviceDetails: e),
-                                  const SizedBox(
-                                    height: 10,
-                                  )
-                                ],
+                          GetBuilder<ServiceController>(
+                            builder: (_) {
+                              return Center(
+                                child: ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: _.services.length,
+                                  itemBuilder: ((ctx, index) {
+                                    return Center(
+                                      child: ServiceOptionTile(
+                                        service: _.services[index],
+                                      ),
+                                    );
+                                  }),
+                                ),
                               );
-                            }).toList(),
+                            },
                           ),
+                          // Column(
+                          //   children: services.map((e) {
+                          //     return Column(
+                          //       children: [
+                          //         ServiceOptionTile(serviceDetails: e),
+                          //         const SizedBox(
+                          //           height: 10,
+                          //         )
+                          //       ],
+                          //     );
+                          //   }).toList(),
+                          // ),
                         ],
                       ),
                     ),

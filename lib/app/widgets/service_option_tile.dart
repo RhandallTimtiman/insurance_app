@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:insurance_app/app/domain/controller/controllers.dart';
+import 'package:insurance_app/app/domain/model/models.dart';
 
-class ServiceOptionTile extends StatefulWidget {
-  final dynamic serviceDetails;
-  const ServiceOptionTile({Key? key, required this.serviceDetails})
-      : super(key: key);
+class ServiceOptionTile extends StatelessWidget {
+  final Service service;
 
-  @override
-  State<ServiceOptionTile> createState() => _ServiceOptionTileState();
-}
+  const ServiceOptionTile({
+    Key? key,
+    required this.service,
+  }) : super(key: key);
 
-class _ServiceOptionTileState extends State<ServiceOptionTile> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return GestureDetector(
-      onDoubleTap: (() => Get.toNamed('/list')),
+      onTap: (() => {
+            Get.find<ServiceController>().setActiveService(service),
+            Get.toNamed('/list')
+          }),
       child: Card(
         elevation: 10,
         child: Column(
@@ -28,7 +31,7 @@ class _ServiceOptionTileState extends State<ServiceOptionTile> {
                   width: 100,
                   height: 100,
                   child: Image.network(
-                    widget.serviceDetails['image'],
+                    'https://www.logolynx.com/images/logolynx/83/83a2affc03c2ae88c42b1c3ffcc7b509.jpeg',
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -45,7 +48,7 @@ class _ServiceOptionTileState extends State<ServiceOptionTile> {
               ),
               child: Center(
                 child: Text(
-                  widget.serviceDetails['serviceName'].toString(),
+                  service.name,
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,

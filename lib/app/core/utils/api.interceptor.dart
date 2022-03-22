@@ -4,7 +4,11 @@ import 'package:flutter/material.dart';
 class ApiInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    options.headers["Accept"] = "application/json";
+    options.headers["Content-Type"] = "application/json";
+
     debugPrint('REQUEST[${options.method}] => PATH: ${options.path}');
+
     return super.onRequest(options, handler);
   }
 
