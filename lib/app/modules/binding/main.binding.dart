@@ -8,5 +8,13 @@ class MainBinding extends Bindings {
       ServiceController(),
       permanent: true,
     );
+    Get.put(
+      ProfileController(),
+      permanent: true,
+    );
+    Get.put(
+      ReservationDetailsController(),
+      permanent: true,
+    );
   }
 }

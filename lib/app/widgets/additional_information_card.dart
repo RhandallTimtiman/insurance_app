@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:insurance_app/app/domain/model/models.dart';
 
 class AdditionalInformationCard extends StatelessWidget {
-  const AdditionalInformationCard({Key? key}) : super(key: key);
+  final ReservationDetails reservationDetails;
+  const AdditionalInformationCard({
+    Key? key,
+    required this.reservationDetails,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +46,9 @@ class AdditionalInformationCard extends StatelessWidget {
                     const SizedBox(
                       height: 5,
                     ),
-                    const Text(
-                      'Terms Of Payment: 3 Days',
-                      style: TextStyle(
+                    Text(
+                      'Terms Of Payment: ${reservationDetails.seaFreightTicket?.termsOfPayment ?? 'N / A'}',
+                      style: const TextStyle(
                         fontSize: 12,
                       ),
                     ),
@@ -60,9 +65,10 @@ class AdditionalInformationCard extends StatelessWidget {
                     const SizedBox(
                       height: 5,
                     ),
-                    const Text(
-                      'Special Instruction HJASKDHASD iqwueiwqe kasjd qwoiueuwiq ogfklg skdjkskj iuereiu tiurin kdjfjkfdkjd jrieur sdhjsh jdhshjs hjsdywe ueue iwiw usjdjd sjsj wuwuew hfhhhd ',
-                      style: TextStyle(
+                    Text(
+                      reservationDetails.seaFreightTicket!.specialInstruction ??
+                          'N / A',
+                      style: const TextStyle(
                         fontSize: 12,
                       ),
                       maxLines: 3,

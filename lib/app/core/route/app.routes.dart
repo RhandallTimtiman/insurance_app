@@ -18,6 +18,7 @@ class AppRoutes {
     GetPage(
       name: '/list',
       page: () => const ReservationListingScreen(),
+      binding: ReservationBinding(),
     ),
     GetPage(
       name: '/details',

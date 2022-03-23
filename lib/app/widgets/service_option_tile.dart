@@ -15,10 +15,12 @@ class ServiceOptionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return GestureDetector(
-      onTap: (() => {
-            Get.find<ServiceController>().setActiveService(service),
-            Get.toNamed('/list')
-          }),
+      onTap: (() {
+        Get.find<ServiceController>().setActiveService(service);
+        Get.find<ProfileController>().getProfileDetails(
+          serviceId: service.companyServiceId,
+        );
+      }),
       child: Card(
         elevation: 10,
         child: Column(

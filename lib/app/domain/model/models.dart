@@ -1,1 +1,9 @@
 export 'service.model.dart';
+export 'reservation.model.dart';
+export 'container_summary.model.dart';
+export 'company.model.dart';
+export 'reservation.model.dart';
+export 'reservation_details.model.dart';
+export 'sea_freight_ticket.model.dart';
+export 'container_summary_details.model.dart';
+export 'shipping_line.model.dart';

@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:insurance_app/app/domain/controller/controllers.dart';
+import 'package:insurance_app/app/domain/model/models.dart';
 
 class ReservationCard extends StatelessWidget {
-  const ReservationCard({Key? key}) : super(key: key);
+  final Reservation reservation;
+  const ReservationCard({
+    Key? key,
+    required this.reservation,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onDoubleTap: () {
+        Get.find<ReservationDetailsController>()
+            .setReservationId(reservation.reservationId);
         Get.toNamed('/details');
       },
       child: Material(
@@ -34,18 +42,18 @@ class ReservationCard extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children: const [
+                        children: [
                           Text(
-                            'XLOG-1245',
-                            style: TextStyle(
+                            reservation.reservationId,
+                            style: const TextStyle(
                               fontSize: 15,
                               letterSpacing: 1,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
-                            'Status: New',
-                            style: TextStyle(
+                            'Status: ${reservation.status}',
+                            style: const TextStyle(
                               fontSize: 12,
                             ),
                           ),
@@ -55,10 +63,10 @@ class ReservationCard extends StatelessWidget {
                         height: 15,
                       ),
                       Row(
-                        children: const [
+                        children: [
                           Text(
-                            'Service Provider: Rhandall Providers',
-                            style: TextStyle(
+                            'Service Provider: ${reservation.serviceProvider}',
+                            style: const TextStyle(
                               fontSize: 12,
                             ),
                           ),
@@ -81,20 +89,20 @@ class ReservationCard extends StatelessWidget {
                               flex: 1,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: const [
-                                  Text(
+                                children: [
+                                  const Text(
                                     'Origin:',
                                     style: TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 5,
                                   ),
                                   Text(
-                                    'Tanay, Rizal asdsa dasdasd sad sad as asdsa asdas',
-                                    style: TextStyle(
+                                    reservation.origin,
+                                    style: const TextStyle(
                                       overflow: TextOverflow.ellipsis,
                                       fontSize: 12,
                                     ),
@@ -127,20 +135,20 @@ class ReservationCard extends StatelessWidget {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.end,
-                                children: const [
-                                  Text(
+                                children: [
+                                  const Text(
                                     'Destination:',
                                     style: TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 5,
                                   ),
                                   Text(
-                                    'Tanay, Rizal asdsa dasdasd sad sad as asdsa asdas',
-                                    style: TextStyle(
+                                    reservation.destination,
+                                    style: const TextStyle(
                                       overflow: TextOverflow.ellipsis,
                                       fontSize: 12,
                                     ),
@@ -162,10 +170,10 @@ class ReservationCard extends StatelessWidget {
                         ),
                       ),
                       Row(
-                        children: const [
+                        children: [
                           Text(
-                            'Shipment Date: November 27, 1998',
-                            style: TextStyle(
+                            'Shipment Date: ${reservation.shipmentDate ?? 'N/A'}',
+                            style: const TextStyle(
                               fontSize: 12,
                             ),
                           ),

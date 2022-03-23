@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:insurance_app/app/domain/model/models.dart';
 
 class CommodityCard extends StatelessWidget {
-  const CommodityCard({Key? key}) : super(key: key);
+  final ReservationDetails reservationDetails;
+  const CommodityCard({
+    Key? key,
+    required this.reservationDetails,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,20 +57,22 @@ class CommodityCard extends StatelessWidget {
                             flex: 1,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Text(
+                              children: [
+                                const Text(
                                   'Commodity Description',
                                   style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 5,
                                 ),
                                 Text(
-                                  'Commodity Description meow meow juju kis kiasiue hsadh qwe asdaswq eqw sadsad ',
-                                  style: TextStyle(
+                                  reservationDetails.seaFreightTicket
+                                          ?.commodityDescription ??
+                                      'N / A',
+                                  style: const TextStyle(
                                     fontSize: 12,
                                   ),
                                   maxLines: 3,
@@ -81,39 +88,40 @@ class CommodityCard extends StatelessWidget {
                             flex: 1,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Text(
+                              children: [
+                                const Text(
                                   'HS Code',
                                   style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 5,
                                 ),
                                 Text(
-                                  'HS CODE 1992',
-                                  style: TextStyle(
+                                  reservationDetails.seaFreightTicket?.hsCode ??
+                                      'N / A',
+                                  style: const TextStyle(
                                     fontSize: 12,
                                   ),
                                   maxLines: 3,
                                   overflow: TextOverflow.ellipsis,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
-                                Text(
+                                const Text(
                                   'Load Type',
                                   style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 5,
                                 ),
-                                Text(
+                                const Text(
                                   'Full Container Load (FCL)',
                                   style: TextStyle(
                                     fontSize: 12,
@@ -142,38 +150,27 @@ class CommodityCard extends StatelessWidget {
                       const SizedBox(
                         height: 5,
                       ),
-                      Row(
-                        children: [
-                          Container(
-                            width: 20,
-                          ),
-                          const Text(
-                            '20 Dry Storage Container x 1',
-                            style: TextStyle(
-                              fontSize: 12,
+                      for (var i = 0;
+                          i < reservationDetails.containerSummary!.length;
+                          i++)
+                        Row(
+                          children: [
+                            Container(
+                              width: 20,
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                            width: 20,
-                          ),
-                          const Text(
-                            '40 Dry Storage Container x 3',
-                            style: TextStyle(
-                              fontSize: 12,
+                            Container(
+                              margin: const EdgeInsets.only(
+                                bottom: 5,
+                              ),
+                              child: Text(
+                                '${reservationDetails.containerSummary![i].size} ${reservationDetails.containerSummary![i].type} x ${reservationDetails.containerSummary![i].quantity}',
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                ),
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
+                          ],
+                        ),
                     ],
                   ),
                 ),

@@ -7,13 +7,13 @@ import 'package:insurance_app/app/core/utils/database.helper.dart';
 import 'package:insurance_app/app/domain/interface/interfaces.dart';
 import 'package:insurance_app/app/domain/model/models.dart';
 
-class AuthService implements IAuthInterface {
+class AuthService implements IAuth {
   final _dio = Dio()..interceptors.add(ApiInterceptor());
 
   final dbHelper = DatabaseHelper.instance;
 
   @override
-  Future signIn({required userName, required password}) async {
+  Future<List<Service>> signIn({required userName, required password}) async {
     _dio.options.headers = <String, dynamic>{
       "requiresToken": false,
     };
@@ -28,10 +28,6 @@ class AuthService implements IAuthInterface {
           'Password': password,
         },
       );
-
-      print(userName);
-      print(password);
-      inspect(response);
 
       if (response.statusCode == 200) {
         var body = response.data;
@@ -57,6 +53,51 @@ class AuthService implements IAuthInterface {
       }
     } catch (e) {
       rethrow;
+    }
+  }
+
+  @override
+  Future<bool> refreshExpiredToken() async {
+    final tempDio = Dio();
+
+    tempDio.options.headers = <String, dynamic>{
+      'Accept': 'application/json',
+      'Content-Type': 'application/json;charset=UTF-8',
+      'Charset': 'utf-8',
+    };
+
+    final result = await dbHelper.queryTokenTable();
+
+    inspect(result);
+
+    try {
+      var uri = Uri.https(ApiRoutes.auth, '/api/auth/refresh-token');
+
+      Response response = await tempDio.postUri(
+        uri,
+        data: {
+          'accessToken': result.first['accessToken'],
+          'refreshToken': result.first['refreshToken'],
+        },
+      );
+      inspect(response);
+
+      if (response.statusCode == 200) {
+        var body = response.data;
+
+        Map<String, dynamic> row = {
+          'accessToken': body["accessToken"],
+          'refreshToken': body["refreshToken"]
+        };
+
+        await dbHelper.upsertToken(row);
+
+        return true;
+      } else {
+        throw false;
+      }
+    } catch (e) {
+      return false;
     }
   }
 }
