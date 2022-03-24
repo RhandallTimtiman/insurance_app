@@ -9,6 +9,8 @@ class ProfileController extends GetxController {
 
   final company = Company().obs;
 
+  final username = "".obs;
+
   Future<void> getProfileDetails({required serviceId}) async {
     Get.dialog(
       Dialog(
@@ -48,10 +50,11 @@ class ProfileController extends GetxController {
       barrierDismissible: false,
     );
 
-    _profileService.getProfileDetails(serviceId: serviceId).then((result) {
+    await _profileService
+        .getProfileDetails(serviceId: serviceId)
+        .then((result) {
       setCompany(result);
       Get.back();
-      Get.toNamed('/list');
       Get.snackbar(
         'Success',
         'User information retrieved successfully!',
@@ -61,6 +64,7 @@ class ProfileController extends GetxController {
           seconds: 1,
         ),
       );
+      Get.offAllNamed('/list');
     }).catchError((e) {
       Get.back();
       Get.snackbar(
@@ -77,6 +81,11 @@ class ProfileController extends GetxController {
 
   setCompany(value) {
     company.value = value;
+    update();
+  }
+
+  setUsername(value) {
+    username.value = value;
     update();
   }
 }

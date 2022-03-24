@@ -66,7 +66,7 @@ class AdditionalInformationCard extends StatelessWidget {
                       height: 5,
                     ),
                     Text(
-                      reservationDetails.seaFreightTicket!.specialInstruction ??
+                      reservationDetails.seaFreightTicket?.specialInstruction ??
                           'N / A',
                       style: const TextStyle(
                         fontSize: 12,

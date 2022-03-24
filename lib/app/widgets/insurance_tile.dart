@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:insurance_app/app/domain/controller/controllers.dart';
+import 'package:insurance_app/app/domain/model/models.dart';
 import 'package:insurance_app/app/modules/screens/screens.dart';
 
 class InsuranceTile extends StatelessWidget {
-  final String image;
-  final String tag;
-  final String name;
+  final InsuranceProvider insuranceProvider;
 
   const InsuranceTile({
     Key? key,
-    this.image = '',
-    this.tag = '',
-    this.name = '',
+    required this.insuranceProvider,
   }) : super(key: key);
 
   @override
@@ -21,20 +19,17 @@ class InsuranceTile extends StatelessWidget {
         padding: const EdgeInsets.all(
           10,
         ),
-        height: 125,
+        height: 170,
         child: Row(
           children: [
-            Hero(
-              tag: tag,
-              child: Material(
-                elevation: 10,
-                child: Container(
-                  width: 125,
-                  color: Colors.blue,
-                  child: Image.network(
-                    image,
-                    fit: BoxFit.fill,
-                  ),
+            Material(
+              elevation: 10,
+              child: Container(
+                width: 125,
+                color: Colors.blue,
+                child: Image.network(
+                  'https://cdn4.vectorstock.com/i/1000x1000/26/33/logo-template-for-an-insurance-company-vector-4542633.jpg',
+                  fit: BoxFit.fill,
                 ),
               ),
             ),
@@ -52,31 +47,37 @@ class InsuranceTile extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            name,
+                            insuranceProvider.name ?? 'N / A',
                             style: const TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
                             ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                           ),
                           const SizedBox(
                             height: 5,
                           ),
-                          const Text(
-                            'Balikbayan Road Tanay, Rizal',
-                            style: TextStyle(
+                          Text(
+                            insuranceProvider.address ?? 'N / A',
+                            style: const TextStyle(
                               fontSize: 12,
                             ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                           ),
                           const SizedBox(
                             height: 5,
                           ),
-                          const Text(
-                            'Total Price: PHP 123',
-                            style: TextStyle(
+                          Text(
+                            '${insuranceProvider.containerRateList?.containerRates![0].publishedCurrencyCode} ${insuranceProvider.containerRateList?.totalPublishedAmount}',
+                            style: const TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.bold,
                             ),
                             textAlign: TextAlign.start,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ],
                       ),
@@ -86,12 +87,11 @@ class InsuranceTile extends StatelessWidget {
                       children: [
                         InkWell(
                           onTap: () {
-                            Get.to(
-                              () => InsuranceDetailsScreen(
-                                tag: tag,
-                                image: image,
-                              ),
+                            Get.find<InsuranceController>()
+                                .setSelectedInsuranceProvider(
+                              insuranceProvider,
                             );
+                            Get.toNamed('/insurance-details');
                           },
                           child: Container(
                             height: 40,

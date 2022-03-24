@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:insurance_app/app/domain/controller/controllers.dart';
 import 'package:insurance_app/app/widgets/widgets.dart';
 
 class InsuranceOptionsScreen extends StatefulWidget {
@@ -24,6 +26,17 @@ class _InsuranceOptionsScreenState extends State<InsuranceOptionsScreen> {
     },
   ];
 
+  final InsuranceController _insuranceController = Get.find();
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      _insuranceController.getRecommendedInsurance();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -45,74 +58,102 @@ class _InsuranceOptionsScreenState extends State<InsuranceOptionsScreen> {
         108,
         1,
       ),
-      body: SizedBox(
-        height: size.height,
-        width: size.width,
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(
-                vertical: 15,
-                horizontal: 20,
-              ),
-              height: 80,
-              color: const Color.fromRGBO(
-                2,
-                39,
-                108,
-                1,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: const [
-                  Text(
-                    'Insurance Options',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      letterSpacing: 1,
-                      fontWeight: FontWeight.bold,
-                    ),
+      body: GetBuilder<InsuranceController>(
+        builder: (_) {
+          return SizedBox(
+            height: size.height,
+            width: size.width,
+            child: Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 15,
+                    horizontal: 20,
                   ),
-                ],
-              ),
+                  height: 80,
+                  color: const Color.fromRGBO(
+                    2,
+                    39,
+                    108,
+                    1,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: const [
+                      Text(
+                        'Insurance Options',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                          letterSpacing: 1,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    width: size.width,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 30,
+                      horizontal: 30,
+                    ),
+                    decoration: const BoxDecoration(
+                      color: Color.fromRGBO(245, 245, 245, 1),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(
+                          70,
+                        ),
+                      ),
+                    ),
+                    child: !_.isLoading.value
+                        ? ListView.separated(
+                            shrinkWrap: true,
+                            itemBuilder: (ctx, index) {
+                              return InsuranceTile(
+                                insuranceProvider: _.insuranceProviders[index],
+                              );
+                            },
+                            separatorBuilder: (ctx, index) {
+                              return const SizedBox(
+                                height: 5,
+                              );
+                            },
+                            itemCount: _.insuranceProviders.length,
+                          )
+                        : Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: const [
+                                CircularProgressIndicator(
+                                  strokeWidth: 7.0,
+                                  backgroundColor: Color.fromRGBO(
+                                    244,
+                                    162,
+                                    64,
+                                    1,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  "Fetching Insurance Recommendations...",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                  ),
+                )
+              ],
             ),
-            Expanded(
-              child: Container(
-                width: size.width,
-                padding: const EdgeInsets.symmetric(
-                  vertical: 30,
-                  horizontal: 30,
-                ),
-                decoration: const BoxDecoration(
-                  color: Color.fromRGBO(245, 245, 245, 1),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(
-                      70,
-                    ),
-                  ),
-                ),
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  itemBuilder: (ctx, index) {
-                    return InsuranceTile(
-                      image: options[index]["image"],
-                      tag: options[index]["tag"],
-                      name: options[index]["name"],
-                    );
-                  },
-                  separatorBuilder: (ctx, index) {
-                    return const SizedBox(
-                      height: 5,
-                    );
-                  },
-                  itemCount: options.length,
-                ),
-              ),
-            )
-          ],
-        ),
+          );
+        },
       ),
     );
   }

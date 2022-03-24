@@ -81,6 +81,8 @@ class ReservationDetails {
   String? shippingLineImage;
   SeaFreightTicket? seaFreightTicket;
   late List<ContainerSummaryDetails>? containerSummary;
+  late List<ContainerDetails>? containers;
+  late List<ContainerDetails>? containerInsuranceNotBookedContainer;
 
   ReservationDetails({
     this.id,
@@ -163,6 +165,8 @@ class ReservationDetails {
     this.shippingLineImage,
     this.seaFreightTicket,
     this.containerSummary,
+    this.containers,
+    this.containerInsuranceNotBookedContainer,
   });
 
   ReservationDetails.fromJson(Map<String, dynamic> json) {
@@ -252,9 +256,34 @@ class ReservationDetails {
     seaFreightTicket = SeaFreightTicket.fromJson(json['seaFreightTicket']);
     if (json['containerSummary'] != null) {
       containerSummary = <ContainerSummaryDetails>[];
-      json['containerSummary'].forEach((v) {
-        containerSummary!.add(ContainerSummaryDetails.fromJson(v));
-      });
+      json['containerSummary'].forEach(
+        (v) {
+          containerSummary!.add(ContainerSummaryDetails.fromJson(v));
+        },
+      );
+    } else {
+      containerSummary = [];
+    }
+    if (json['containers'] != null) {
+      containers = <ContainerDetails>[];
+      json['containers'].forEach(
+        (v) {
+          containers!.add(ContainerDetails.fromJson(v));
+        },
+      );
+    } else {
+      containers = [];
+    }
+    if (json['containerInsuranceNotBookedContainer'] != null) {
+      containerInsuranceNotBookedContainer = <ContainerDetails>[];
+      json['containerInsuranceNotBookedContainer'].forEach(
+        (v) {
+          containerInsuranceNotBookedContainer!
+              .add(ContainerDetails.fromJson(v));
+        },
+      );
+    } else {
+      containerInsuranceNotBookedContainer = [];
     }
   }
 }

@@ -66,6 +66,7 @@ class AuthController extends GetxController {
 
         if (temp.isNotEmpty) {
           Get.find<ServiceController>().setListOfService(temp);
+          Get.find<ProfileController>().setUsername(userNameController.text);
           Get.back();
           Get.snackbar(
             'Success',

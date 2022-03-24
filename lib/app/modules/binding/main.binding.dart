@@ -16,5 +16,9 @@ class MainBinding extends Bindings {
       ReservationDetailsController(),
       permanent: true,
     );
+    Get.put(
+      InsuranceController(),
+      permanent: true,
+    );
   }
 }

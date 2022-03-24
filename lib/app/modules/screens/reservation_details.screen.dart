@@ -172,8 +172,8 @@ class _ReservationDetailsScreenState extends State<ReservationDetailsScreen> {
                                                       _
                                                               .reservationDetails
                                                               .value
-                                                              .seaFreightTicket!
-                                                              .serviceTicketId ??
+                                                              .seaFreightTicket
+                                                              ?.serviceTicketId ??
                                                           'N / A',
                                                       style: const TextStyle(
                                                         fontSize: 12,
@@ -333,7 +333,7 @@ class _ReservationDetailsScreenState extends State<ReservationDetailsScreen> {
                       ],
                     ),
                     onPressed: () {
-                      Get.toNamed('/insurance-options');
+                      _.summarizeContainers();
                     },
                   ),
                 ],

@@ -36,9 +36,9 @@ class AppRoutes {
       name: '/payment-option',
       page: () => const PaymentOptionScreen(),
     ),
-    // GetPage(
-    //   name: '/insurance-details',
-    //   page: () => const InsuranceDetailsScreen(),
-    // ),
+    GetPage(
+      name: '/insurance-details',
+      page: () => const InsuranceDetailsScreen(),
+    ),
   ];
 }
