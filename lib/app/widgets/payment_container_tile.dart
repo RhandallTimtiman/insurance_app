@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:insurance_app/app/domain/model/models.dart';
 
 class PaymentContainerTile extends StatelessWidget {
-  final List<dynamic> containerList;
-  final dynamic containerInfo;
-  const PaymentContainerTile(
-      {Key? key, required this.containerList, required this.containerInfo})
-      : super(key: key);
+  final ContainerDisplay containerDisplay;
+  const PaymentContainerTile({
+    Key? key,
+    required this.containerDisplay,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var containerName = containerInfo["name"].toString();
-    var containerCount = containerList.length.toString();
+    var containers = containerDisplay.containers ?? [];
+
     return Container(
       padding: const EdgeInsets.all(12),
       child: Column(
@@ -20,14 +21,14 @@ class PaymentContainerTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '$containerName x $containerCount',
+                '${containerDisplay.containerSizeName} ${containerDisplay.containerTypeName} x ${containerDisplay.qty}',
                 style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
-                containerInfo['totalFeePerContainer'].toString(),
+                '${containerDisplay.publishedCurrencyCode} ${containerDisplay.totalAmount}',
                 style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
@@ -42,47 +43,69 @@ class PaymentContainerTile extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: containerList.map(
-                (e) {
-                  var containerListDetails = e;
-                  String fee = e["fee"];
-                  return Container(
+              children: [
+                for (var container in containers)
+                  Container(
                     padding: const EdgeInsets.only(left: 12),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 10,
-                              height: 10,
-                              color: const Color.fromRGBO(
-                                237,
-                                108,
-                                77,
-                                1,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              containerListDetails['number'].toString(),
-                              style: const TextStyle(fontSize: 10),
-                            ),
-                          ],
+                        const SizedBox(
+                          width: 40,
                         ),
-                        Text(
-                          '$fee Per Container'.toString(),
-                          style: const TextStyle(fontSize: 10),
-                        )
+                        Expanded(
+                          flex: 1,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    width: 10,
+                                    height: 10,
+                                    color: const Color.fromRGBO(
+                                      237,
+                                      108,
+                                      77,
+                                      1,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    container.containerNumber ?? 'N / A',
+                                    style: const TextStyle(
+                                      fontSize: 10,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '${containerDisplay.publishedCurrencyCode} ${containerDisplay.publishedRateAmount} Per Container'
+                                    .toString(),
+                                style: const TextStyle(fontSize: 10),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 40,
+                        ),
                       ],
                     ),
-                  );
-                },
-              ).toList(),
+                  )
+              ],
             ),
           )
         ],

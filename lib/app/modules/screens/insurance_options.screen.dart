@@ -111,6 +111,7 @@ class _InsuranceOptionsScreenState extends State<InsuranceOptionsScreen> {
                     child: !_.isLoading.value
                         ? ListView.separated(
                             shrinkWrap: true,
+                            itemCount: _.insuranceProviders.length,
                             itemBuilder: (ctx, index) {
                               return InsuranceTile(
                                 insuranceProvider: _.insuranceProviders[index],
@@ -121,7 +122,6 @@ class _InsuranceOptionsScreenState extends State<InsuranceOptionsScreen> {
                                 height: 5,
                               );
                             },
-                            itemCount: _.insuranceProviders.length,
                           )
                         : Center(
                             child: Column(

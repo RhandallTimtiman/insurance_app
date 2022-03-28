@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:insurance_app/app/domain/controller/controllers.dart';
 import 'package:insurance_app/app/domain/model/models.dart';
-import 'package:insurance_app/app/modules/screens/screens.dart';
 
 class InsuranceTile extends StatelessWidget {
   final InsuranceProvider insuranceProvider;
@@ -70,7 +69,7 @@ class InsuranceTile extends StatelessWidget {
                             height: 5,
                           ),
                           Text(
-                            '${insuranceProvider.containerRateList?.containerRates![0].publishedCurrencyCode} ${insuranceProvider.containerRateList?.totalPublishedAmount}',
+                            '${insuranceProvider.containerRateList!.containerRates!.isNotEmpty ? insuranceProvider.containerRateList?.containerRates![0].publishedCurrencyCode : 'PHP'} ${insuranceProvider.containerRateList?.totalPublishedAmount}',
                             style: const TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.bold,

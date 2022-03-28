@@ -14,3 +14,8 @@ export 'weight_unit_of_measurement.model.dart';
 export 'insurance_provider.model.dart';
 export 'container_rate.model.dart';
 export 'container_rate_list.model.dart';
+export 'payment_provider.model.dart';
+export 'container_display.model.dart';
+export 'computed_rates.model.dart';
+export 'booking_party.model.dart';
+export 'contact_details.model.dart';

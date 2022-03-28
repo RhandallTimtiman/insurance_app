@@ -13,6 +13,14 @@ class InsuranceDetailsScreen extends StatefulWidget {
 }
 
 class _InsuranceDetailsScreenState extends State<InsuranceDetailsScreen> {
+  bool hasAgreedTerms = false;
+
+  void setHasAgreedTerms(value) {
+    setState(() {
+      hasAgreedTerms = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -238,7 +246,7 @@ class _InsuranceDetailsScreenState extends State<InsuranceDetailsScreen> {
                                                       width: 5,
                                                     ),
                                                     Text(
-                                                      '${_.selectedInsuranceProvider.value.containerRateList!.containerRates![0].publishedCurrencyCode} ${_.selectedInsuranceProvider.value.containerRateList!.totalPublishedAmount}',
+                                                      '${_.selectedInsuranceProvider.value.containerRateList!.containerRates!.isNotEmpty ? _.selectedInsuranceProvider.value.containerRateList?.containerRates![0].publishedCurrencyCode : 'PHP'} ${_.selectedInsuranceProvider.value.containerRateList!.totalPublishedAmount}',
                                                       style: const TextStyle(
                                                         fontSize: 12,
                                                         fontWeight:
@@ -277,8 +285,10 @@ class _InsuranceDetailsScreenState extends State<InsuranceDetailsScreen> {
                                 fontSize: 12,
                               ),
                             ),
-                            value: false,
-                            onChanged: (newValue) {},
+                            value: hasAgreedTerms,
+                            onChanged: (newValue) {
+                              setHasAgreedTerms(newValue);
+                            },
                             controlAffinity: ListTileControlAffinity.leading,
                           )
                         ],
@@ -305,7 +315,7 @@ class _InsuranceDetailsScreenState extends State<InsuranceDetailsScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    'Total: ${_.selectedInsuranceProvider.value.containerRateList!.containerRates![0].publishedCurrencyCode} ${_.selectedInsuranceProvider.value.containerRateList!.totalPublishedAmount}',
+                    'Total: ${_.selectedInsuranceProvider.value.containerRateList!.containerRates!.isNotEmpty ? _.selectedInsuranceProvider.value.containerRateList?.containerRates![0].publishedCurrencyCode : 'PHP'} ${_.selectedInsuranceProvider.value.containerRateList!.totalPublishedAmount}',
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -318,41 +328,43 @@ class _InsuranceDetailsScreenState extends State<InsuranceDetailsScreen> {
                     ),
                   ),
                   ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                        const Color.fromRGBO(
-                          2,
-                          39,
-                          108,
-                          1,
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                          hasAgreedTerms
+                              ? const Color.fromRGBO(
+                                  2,
+                                  39,
+                                  108,
+                                  1,
+                                )
+                              : Colors.grey,
                         ),
-                      ),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                    ),
-                    child: Row(
-                      children: const [
-                        Text(
-                          'Pay Now',
-                          style: TextStyle(
-                            fontSize: 15,
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
                         ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Icon(
-                          Icons.arrow_forward_ios_sharp,
-                        ),
-                      ],
-                    ),
-                    onPressed: () {
-                      Get.toNamed('/payment-summary');
-                    },
-                  ),
+                      ),
+                      child: Row(
+                        children: const [
+                          Text(
+                            'Pay Now',
+                            style: TextStyle(
+                              fontSize: 15,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Icon(
+                            Icons.arrow_forward_ios_sharp,
+                          ),
+                        ],
+                      ),
+                      onPressed: () {
+                        hasAgreedTerms ? _.processContainerSummary() : null;
+                      }),
                 ],
               ),
             ),

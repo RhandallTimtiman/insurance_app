@@ -8,6 +8,8 @@ class SeaFreightTicket {
   String? specialInstruction;
   String? serviceTicketId;
   ShippingLine? shippingLine;
+  BookingParty? consignee;
+  BookingParty? bookingParty;
 
   SeaFreightTicket({
     this.commodityDescription,
@@ -17,6 +19,8 @@ class SeaFreightTicket {
     this.specialInstruction,
     this.serviceTicketId,
     this.shippingLine,
+    this.consignee,
+    this.bookingParty,
   });
 
   SeaFreightTicket.fromJson(Map<String, dynamic> json) {
@@ -27,5 +31,7 @@ class SeaFreightTicket {
     specialInstruction = json['specialInstruction'];
     serviceTicketId = json['serviceTicketId'];
     shippingLine = ShippingLine.fromJson(json['shippingLine']);
+    bookingParty = BookingParty.fromJson(json['bookingParty']);
+    consignee = BookingParty.fromJson(json['consignee']);
   }
 }

@@ -20,5 +20,9 @@ class MainBinding extends Bindings {
       InsuranceController(),
       permanent: true,
     );
+    Get.put(
+      PaymentController(),
+      permanent: true,
+    );
   }
 }
