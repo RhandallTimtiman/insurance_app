@@ -328,43 +328,43 @@ class _InsuranceDetailsScreenState extends State<InsuranceDetailsScreen> {
                     ),
                   ),
                   ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
-                          hasAgreedTerms
-                              ? const Color.fromRGBO(
-                                  2,
-                                  39,
-                                  108,
-                                  1,
-                                )
-                              : Colors.grey,
-                        ),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                        hasAgreedTerms
+                            ? const Color.fromRGBO(
+                                2,
+                                39,
+                                108,
+                                1,
+                              )
+                            : Colors.grey,
+                      ),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
-                      child: Row(
-                        children: const [
-                          Text(
-                            'Pay Now',
-                            style: TextStyle(
-                              fontSize: 15,
-                            ),
+                    ),
+                    child: Row(
+                      children: const [
+                        Text(
+                          'Pay Now',
+                          style: TextStyle(
+                            fontSize: 15,
                           ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Icon(
-                            Icons.arrow_forward_ios_sharp,
-                          ),
-                        ],
-                      ),
-                      onPressed: () {
-                        hasAgreedTerms ? _.processContainerSummary() : null;
-                      }),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Icon(
+                          Icons.arrow_forward_ios_sharp,
+                        ),
+                      ],
+                    ),
+                    onPressed: () {
+                      hasAgreedTerms ? _.processContainerSummary() : null;
+                    },
+                  ),
                 ],
               ),
             ),
