@@ -19,3 +19,5 @@ export 'container_display.model.dart';
 export 'computed_rates.model.dart';
 export 'booking_party.model.dart';
 export 'contact_details.model.dart';
+export 'address_details.model.dart';
+export 'notify_party.model.dart';

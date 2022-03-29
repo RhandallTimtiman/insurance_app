@@ -80,6 +80,7 @@ class ReservationDetails {
   String? shipperImage;
   String? shippingLineImage;
   SeaFreightTicket? seaFreightTicket;
+  String? containerOwnership;
   late List<ContainerSummaryDetails>? containerSummary;
   late List<ContainerDetails>? containers;
   late List<ContainerDetails>? containerInsuranceNotBookedContainer;
@@ -164,6 +165,7 @@ class ReservationDetails {
     this.shipperImage,
     this.shippingLineImage,
     this.seaFreightTicket,
+    this.containerOwnership,
     this.containerSummary,
     this.containers,
     this.containerInsuranceNotBookedContainer,
@@ -254,6 +256,7 @@ class ReservationDetails {
     shipperImage = json['shipperImage'];
     shippingLineImage = json['shippingLineImage'];
     seaFreightTicket = SeaFreightTicket.fromJson(json['seaFreightTicket']);
+    containerOwnership = json['containerOwnership'];
     if (json['containerSummary'] != null) {
       containerSummary = <ContainerSummaryDetails>[];
       json['containerSummary'].forEach(

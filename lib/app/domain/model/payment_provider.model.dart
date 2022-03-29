@@ -5,6 +5,7 @@ class PaymentProvider {
   String? providerGuid;
   String? providerName;
   String? providerLogo;
+  String? providerImageUrl;
   dynamic productId;
   String? productGuid;
   String? productCode;
@@ -27,6 +28,7 @@ class PaymentProvider {
     this.providerGuid,
     this.providerName,
     this.providerLogo,
+    this.providerImageUrl,
     this.productId,
     this.productGuid,
     this.productCode,
@@ -50,6 +52,7 @@ class PaymentProvider {
     providerGuid = json['providerGuid'];
     providerName = json['providerName'];
     providerLogo = json['providerLogo'];
+    providerImageUrl = json['providerImageUrl'];
     productId = json['productId'];
     productGuid = json['productGuid'];
     productCode = json['productCode'];

@@ -321,7 +321,9 @@ class _PaymentOptionScreenState extends State<PaymentOptionScreen> {
                               ),
                             ],
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            _.submitPayment();
+                          },
                         ),
                       ],
                     ),

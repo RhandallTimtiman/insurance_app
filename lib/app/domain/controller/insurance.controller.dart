@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:get/get.dart';
 import 'package:insurance_app/app/domain/controller/controllers.dart';
 import 'package:insurance_app/app/domain/interface/interfaces.dart';
@@ -51,7 +49,6 @@ class InsuranceController extends GetxController {
         .getRecommendedInsurance(containers: insuredContainer)
         .then((result) {
       setIsLoading(false);
-      inspect(result);
       setInsuranceProviders(result);
     }).catchError((e) {
       setIsLoading(false);

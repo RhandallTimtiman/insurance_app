@@ -1,8 +1,8 @@
 import 'package:insurance_app/app/domain/model/models.dart';
 
-class BookingParty {
-  dynamic seaFreightTicketActorId;
-  dynamic seaFreightTicketId;
+class NotifyParty {
+  int? seaFreightTicketActorId;
+  int? seaFreightTicketId;
   String? actorType;
   String? guid;
   String? companyName;
@@ -12,7 +12,7 @@ class BookingParty {
   ContactDetails? contactDetails;
   AddressDetails? addressDetails;
 
-  BookingParty({
+  NotifyParty({
     this.seaFreightTicketActorId,
     this.seaFreightTicketId,
     this.actorType,
@@ -25,7 +25,7 @@ class BookingParty {
     this.addressDetails,
   });
 
-  BookingParty.fromJson(Map<String, dynamic> json) {
+  NotifyParty.fromJson(Map<String, dynamic> json) {
     seaFreightTicketActorId = json['seaFreightTicketActorId'];
     seaFreightTicketId = json['seaFreightTicketId'];
     actorType = json['actorType'];

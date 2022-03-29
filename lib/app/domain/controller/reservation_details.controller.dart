@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:get/get.dart';
 import 'package:insurance_app/app/domain/controller/controllers.dart';
 import 'package:insurance_app/app/domain/interface/interfaces.dart';

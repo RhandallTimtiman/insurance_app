@@ -20,7 +20,7 @@ class AuthService implements IAuth {
 
     try {
       var uri = Uri.https(ApiRoutes.auth, 'auth/api/v1/auth/login');
-
+      inspect(uri);
       Response response = await _dio.postUri(
         uri,
         data: {
@@ -28,11 +28,10 @@ class AuthService implements IAuth {
           'Password': password,
         },
       );
-
+      inspect(response);
       if (response.statusCode == 200) {
         var body = response.data;
         var authResult = body['data']['cognito']['authenticationResult'];
-
         Map<String, dynamic> row = {
           'accessToken': authResult['accessToken'],
           'refreshToken': authResult['refreshToken'],
@@ -52,6 +51,7 @@ class AuthService implements IAuth {
         return [];
       }
     } catch (e) {
+      inspect(e);
       rethrow;
     }
   }

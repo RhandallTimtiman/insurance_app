@@ -52,9 +52,6 @@ class PaymentController extends GetxController {
     setIsLoading(true);
 
     _paymentService.getListOfPaymentProvider().then((result) {
-      // var tempProviderList =
-      //     result.where((pp) => pp.productName == 'UPay').toList();
-      // setPaymentProviders(tempProviderList);
       setPaymentProviders(result);
       setIsLoading(false);
     }).catchError((e) {
@@ -94,5 +91,202 @@ class PaymentController extends GetxController {
     }).catchError((e) {
       setShowDetails(true);
     });
+  }
+
+  void submitPayment() {
+    var reservationDetails =
+        Get.find<ReservationDetailsController>().reservationDetails.value;
+    var selectedInsurance =
+        Get.find<InsuranceController>().selectedInsuranceProvider.value;
+    var selectedPaymentProvider = selectedProvider.value;
+    var computedRate = computedRates.value;
+
+    int invoiceStatusId = 9;
+
+    switch (selectedPaymentProvider.productCode) {
+      case "W2WALT":
+        invoiceStatusId = 8;
+        break;
+    }
+
+    var notifyPartyNames = reservationDetails.seaFreightTicket?.notifyParties!
+        .map((e) => e.companyName)
+        .toList();
+
+    var payload = {
+      'reservationId': reservationDetails.reservationId, //insurance provider
+      'productTypeGuid': selectedInsurance.productTypeGuid,
+      'productTypeName': selectedInsurance.productTypeName,
+      'productGuid': selectedInsurance.productGuid,
+      'providerGuid': selectedInsurance.guid,
+      'providerCode': selectedInsurance.code,
+      'providerName': selectedInsurance.name,
+      'ProviderImage': selectedInsurance.imgUrl,
+      'ProviderAddressLine': selectedInsurance.address,
+      'ProviderLandline':
+          '${selectedInsurance.landLinePrefix}${selectedInsurance.landLine}',
+      'ProviderFax':
+          '${selectedInsurance.faxNumberPrefix}${selectedInsurance.faxNumber}',
+      'ProviderCountryCode': selectedInsurance.countryCode,
+      'ProviderCountryName': selectedInsurance.country,
+      'bookingPartyId': reservationDetails.bookingPartyId, //booking party
+      'bookingPartyName': reservationDetails.bookingParty,
+      'bookingPartyImage': reservationDetails.bookingPartyImage,
+      'bookingPartyAddressLine':
+          reservationDetails.seaFreightTicket?.bookingParty!.companyName,
+      'bookingPartyLandline': reservationDetails
+          .seaFreightTicket?.bookingParty?.contactDetails?.phone,
+      'bookingPartyFax': reservationDetails
+          .seaFreightTicket?.bookingParty?.contactDetails?.fax,
+      'bookingPartyCountryId': reservationDetails
+          .seaFreightTicket?.bookingParty?.addressDetails?.countryId,
+      'bookingPartyCountryCode': '',
+      'bookingPartyCountryName': reservationDetails
+          .seaFreightTicket?.bookingParty?.addressDetails?.countryName,
+      'serviceTicketId':
+          reservationDetails.seaFreightTicket?.serviceTicketId, // sr details
+      'seaFreightServiceTicketId': reservationDetails.seaFreightTicket
+          ?.serviceTicketId, //if sea freight, seaFreightServiceTicketId === service ticket id
+      'truckingServiceTicketId':
+          null, //set to null/static value if not available
+      'serviceTypeId': null,
+      'serviceType': null,
+      'shipmentTypeId': reservationDetails.shipmentTypeId,
+      'shipmentType': reservationDetails.shipmentType,
+      'commodityId': reservationDetails.commodityId,
+      'commodityDescription':
+          reservationDetails.commodityDescription, //editable hs desc
+      'shipperId': reservationDetails.shipperId, // shipper details
+      'shipperName': reservationDetails.shipper,
+      'shipperImage': reservationDetails.shipperImage,
+      'shipperAddressLine':
+          reservationDetails.seaFreightTicket!.shipper?.companyName,
+      'shipperLandline':
+          '${reservationDetails.seaFreightTicket!.shipper?.contactDetails?.phonePrefix} ${reservationDetails.seaFreightTicket!.shipper?.contactDetails?.phone}',
+      'shipperFax':
+          '${reservationDetails.seaFreightTicket!.shipper?.contactDetails?.faxPrefix} ${reservationDetails.seaFreightTicket!.shipper?.contactDetails?.fax}',
+      'shipperCountryId': 0,
+      'shipperCountryCode': null,
+      'shipperCountryName': null,
+      'shippingLineId':
+          reservationDetails.seaFreightTicket?.shippingLine?.guid, // sl details
+      'shippingLineName':
+          reservationDetails.seaFreightTicket?.shippingLine?.companyName,
+      'shippingLineImage':
+          reservationDetails.seaFreightTicket?.shippingLine?.imageUrl,
+      'shippingLineAddressLine':
+          reservationDetails.seaFreightTicket?.shippingLine?.addresses,
+      'shippingLineLandline':
+          '${reservationDetails.seaFreightTicket?.shippingLine?.contactDetails?.phonePrefix} ${reservationDetails.seaFreightTicket?.shippingLine?.contactDetails?.phone}',
+      'shippingLineFax':
+          '${reservationDetails.seaFreightTicket?.shippingLine?.contactDetails?.faxPrefix} ${reservationDetails.seaFreightTicket?.shippingLine?.contactDetails?.fax}',
+      'shippingLineCountryId': reservationDetails
+          .seaFreightTicket?.shippingLine!.addressDetails!.countryId,
+      'shippingLineCountryCode': null,
+      'shippingLineCountryName': null,
+      'destinationShippingAgencyId':
+          reservationDetails.destinationShippingAgencyId,
+      'destinationShippingAgencyName':
+          reservationDetails.destinationShippingAgencyName,
+      'destinationShippingAgencyImage':
+          reservationDetails.destinationShippingAgencyImage,
+      'destinationShippingAgencyAddressLine':
+          reservationDetails.destinationShippingAgencyAddressLine,
+      'destinationShippingAgencyLandline':
+          reservationDetails.destinationShippingAgencyLandline,
+      'destinationShippingAgencyFax':
+          reservationDetails.destinationShippingAgencyFax,
+      'destinationShippingAgencyCountryId':
+          reservationDetails.destinationShippingAgencyCountryId,
+      'destinationShippingAgencyCountryCode':
+          reservationDetails.destinationShippingAgencyCountryCode,
+      'destinationShippingAgencyCountryName':
+          reservationDetails.destinationShippingAgencyCountryName,
+      'consigneeId': reservationDetails
+          .seaFreightTicket?.consignee!.guid, // consignee details
+      'consigneeName':
+          reservationDetails.seaFreightTicket?.consignee!.companyName,
+      'consigneeImage':
+          reservationDetails.seaFreightTicket?.consignee!.imageUrl,
+      'consigneeAddressLine':
+          reservationDetails.seaFreightTicket?.consignee!.addresses,
+      'consigneeLandline':
+          reservationDetails.seaFreightTicket?.consignee!.contactDetails?.phone,
+      'consigneeFax':
+          reservationDetails.seaFreightTicket?.consignee!.contactDetails?.fax,
+      'consigneeCountryId': reservationDetails
+          .seaFreightTicket?.consignee!.addressDetails?.countryId,
+      'consigneeCountryCode': null,
+      'consigneeCountryName': null,
+      'notifyPartyIds':
+          reservationDetails.notifyPartyIds?.split(','), //np details
+      'notifyPartyNames': notifyPartyNames!.join(','),
+      'shipmentDate':
+          null, // shipment details // not available on inbound booking so set this to null
+      'eta': reservationDetails.eta,
+      'etd': null, // not available on inbound booking so set this to null
+      'origin': reservationDetails.loadingAddress,
+      'originAddress': reservationDetails.loadingAddress,
+      'originShippingAgencyId': reservationDetails.originShippingAgencyId,
+      'originShippingAgencyName': reservationDetails
+          .originShippingAgencyName, //set to null/static value if not available
+      'destination': reservationDetails.deliveryAddress,
+      'destinationAddress': reservationDetails.deliveryAddress,
+      'portOfLoadingId': reservationDetails.portOfLoadingId,
+      'portOfLoadingName': reservationDetails.portOfLoadingName,
+      'portOfLoadingLoCode': reservationDetails.portOfLoadingLoCode,
+      'portOfDischargeId': reservationDetails.portOfDischargeId,
+      'portOfDischargeName': reservationDetails.portOfDischargeName,
+      'portOfDischargeLoCode': reservationDetails.portOfDischargeLoCode,
+      'containerOwnership': reservationDetails.containerOwnership,
+      'blNumber': reservationDetails.blNumber,
+      'hsCode': reservationDetails.hsCode,
+      'hsDescription':
+          reservationDetails.commodityDescription, //non editable hs desc
+      'containerList': '',
+      'payerId': reservationDetails.bookingPartyId, //booking party id
+      'receiverId': selectedInsurance.guid, //selected insurance provider
+      'paymentOptionId': 1, //set to default 1 (prepaid) as per sir Jaycee
+      'paymentStatusId': 4, // regardless if manual or online
+      'invoiceStatusId':
+          invoiceStatusId, // 8 for w2w, 9 for fpx/bills/upay, 1 for manual
+      'paymentReferenceNumber':
+          '', // dummy for online, real refNumber for manual
+      'countryCode': reservationDetails
+          .bookingPartyCountryCode, // should be payor's country code
+      'currencyCode': reservationDetails
+          .bookingPartyCurrencyCode, // should be payor's currency code
+      'documentUrl': null,
+      'paidAmount': selectedInsurance.containerRateList?.totalPublishedAmount,
+      'paymentDate': DateTime.now().toString(),
+      'remarks': null,
+      'currencyName': null,
+      'currencyLeftSymbol': null,
+      'paymentOption': 2, // 0 all, 1 manual, 2 online, 3 fsc
+      'paymentProviderId': selectedPaymentProvider.providerId,
+      'paymentProviderGuid': selectedPaymentProvider.providerId,
+      'paymentProviderName': selectedPaymentProvider.providerName,
+      'paymentProviderPrefix': selectedPaymentProvider
+          .providerPrefix, //should be provider code instead of providerPrefix as per sir Rupert
+      'paymentProviderProductId': selectedPaymentProvider.providerGuid,
+      'paymentProviderProductGuid': selectedPaymentProvider.productGuid,
+      'paymentProviderProductName': selectedPaymentProvider.productName,
+      'paymentTypeId': selectedPaymentProvider.paymentTypeId,
+      'paymentTypeCode': selectedPaymentProvider.paymentTypeCode,
+      'paymentTypeName': selectedPaymentProvider.paymentTypeName,
+      'paymentProviderLogo': selectedPaymentProvider.providerLogo,
+      'paymentProviderProductImageUrl': selectedPaymentProvider.productImageUrl,
+      'paymentInstruction': selectedPaymentProvider.instruction,
+      'paymentProviderProductCode': selectedPaymentProvider.productCode,
+      'payorEmailAddress':
+          reservationDetails.seaFreightTicket?.bookingParty?.emailAddress,
+      'payorContactNumber':
+          '${reservationDetails.seaFreightTicket?.bookingParty?.contactDetails?.mobilePrefix}${reservationDetails.seaFreightTicket?.bookingParty?.contactDetails?.mobile}',
+      'redirectUrl':
+          null, // if this value is replaced, kindly inform BE since this is being used in Upay payment
+      'chargeFee': computedRate.convenienceFee,
+      'platformFee': computedRate.platformFee
+    };
+    inspect(payload);
   }
 }
