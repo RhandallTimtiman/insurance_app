@@ -3,3 +3,4 @@ export 'reservation.service.dart';
 export 'profile.service.dart';
 export 'insurance.service.dart';
 export 'payment.service.dart';
+export 'global.service.dart';

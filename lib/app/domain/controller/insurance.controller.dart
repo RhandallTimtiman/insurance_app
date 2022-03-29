@@ -150,7 +150,7 @@ class InsuranceController extends GetxController {
                   ),
                   width: double.infinity,
                   decoration: const BoxDecoration(
-                    color: Colors.redAccent,
+                    color: Color.fromRGBO(244, 162, 64, 1),
                     shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(12),

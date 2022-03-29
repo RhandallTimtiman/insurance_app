@@ -3,3 +3,4 @@ export 'reservation.interface.dart';
 export 'profile.interface.dart';
 export 'insurance.interface.dart';
 export 'payment.interface.dart';
+export 'global.interface.dart';

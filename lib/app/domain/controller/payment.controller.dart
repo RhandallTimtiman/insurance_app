@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:insurance_app/app/domain/controller/controllers.dart';
@@ -53,7 +52,7 @@ class PaymentController extends GetxController {
   getPaymentProviders() {
     setIsLoading(true);
 
-    _paymentService.getListOfPaymentProvider().then((result) {
+    _paymentService.getListOfPaymentProvider().then((result) async {
       setPaymentProviders(result);
       setIsLoading(false);
     }).catchError((e) {

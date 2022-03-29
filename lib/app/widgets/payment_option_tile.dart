@@ -1,13 +1,17 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:insurance_app/app/domain/controller/controllers.dart';
 import 'package:insurance_app/app/domain/model/models.dart';
+import 'package:shimmer/shimmer.dart';
 
 class PaymentOptionTile extends StatelessWidget {
   final PaymentProvider paymentProvider;
 
-  const PaymentOptionTile({Key? key, required this.paymentProvider})
-      : super(key: key);
+  const PaymentOptionTile({
+    Key? key,
+    required this.paymentProvider,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +29,7 @@ class PaymentOptionTile extends StatelessWidget {
                         paymentProvider.productGuid
                     ? const Border(
                         top: BorderSide(
-                          width: 5,
+                          width: 2,
                           color: Color.fromRGBO(
                             2,
                             39,
@@ -34,7 +38,7 @@ class PaymentOptionTile extends StatelessWidget {
                           ),
                         ),
                         bottom: BorderSide(
-                          width: 5,
+                          width: 2,
                           color: Color.fromRGBO(
                             2,
                             39,
@@ -43,7 +47,7 @@ class PaymentOptionTile extends StatelessWidget {
                           ),
                         ),
                         left: BorderSide(
-                          width: 5,
+                          width: 2,
                           color: Color.fromRGBO(
                             2,
                             39,
@@ -52,7 +56,7 @@ class PaymentOptionTile extends StatelessWidget {
                           ),
                         ),
                         right: BorderSide(
-                          width: 5,
+                          width: 2,
                           color: Color.fromRGBO(
                             2,
                             39,
@@ -66,7 +70,7 @@ class PaymentOptionTile extends StatelessWidget {
               width: _.selectedProvider.value.productGuid ==
                       paymentProvider.productGuid
                   ? 130
-                  : 125,
+                  : 128,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -74,19 +78,38 @@ class PaymentOptionTile extends StatelessWidget {
                     width: _.selectedProvider.value.productGuid ==
                             paymentProvider.productGuid
                         ? 130
-                        : 125,
+                        : 128,
                     height: _.selectedProvider.value.productGuid ==
                             paymentProvider.productGuid
                         ? 130
-                        : 125,
-                    child: Material(
-                      elevation: 10,
-                      child: Image.network(
-                        'https://rainbowpages.lk/uploads/listings/logo/3/31700.jpg',
-                        fit: BoxFit.fill,
+                        : 128,
+                    child: CachedNetworkImage(
+                      imageUrl: paymentProvider.productImageUrl.toString(),
+                      fit: BoxFit.contain,
+                      placeholder: (context, url) => Shimmer.fromColors(
+                        child: const SizedBox(
+                          height: 80,
+                          width: 80,
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ),
+                        baseColor: const Color(0xFFE0E0E0),
+                        enabled: true,
+                        highlightColor: const Color(0xFFF5F5F5),
+                        period: const Duration(milliseconds: 1000),
                       ),
-                      shadowColor: Colors.white,
+                      errorWidget: (context, url, error) => const Icon(
+                        Icons.error,
+                        size: 50,
+                        color: Colors.redAccent,
+                      ),
                     ),
+                  ),
+                  const Divider(
+                    height: 2,
                   ),
                   Expanded(
                     child: Container(

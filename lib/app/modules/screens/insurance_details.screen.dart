@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:insurance_app/app/domain/controller/controllers.dart';
 import 'package:insurance_app/app/widgets/widgets.dart';
+import 'package:shimmer/shimmer.dart';
 
 class InsuranceDetailsScreen extends StatefulWidget {
   const InsuranceDetailsScreen({
@@ -100,13 +102,36 @@ class _InsuranceDetailsScreenState extends State<InsuranceDetailsScreen> {
                             children: [
                               Material(
                                 elevation: 10,
-                                child: Container(
-                                  width: 150,
-                                  height: 150,
-                                  color: Colors.blue,
-                                  child: Image.network(
-                                    'https://cdn4.vectorstock.com/i/1000x1000/26/33/logo-template-for-an-insurance-company-vector-4542633.jpg',
-                                    fit: BoxFit.fill,
+                                child: SizedBox(
+                                  width: 125,
+                                  height: 125,
+                                  child: CachedNetworkImage(
+                                    imageUrl: _
+                                        .selectedInsuranceProvider.value.imgUrl
+                                        .toString(),
+                                    placeholder: (context, url) =>
+                                        Shimmer.fromColors(
+                                      child: const SizedBox(
+                                        height: 80,
+                                        width: 80,
+                                        child: DecoratedBox(
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ),
+                                      baseColor: const Color(0xFFE0E0E0),
+                                      enabled: true,
+                                      highlightColor: const Color(0xFFF5F5F5),
+                                      period:
+                                          const Duration(milliseconds: 1000),
+                                    ),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(
+                                      Icons.error,
+                                      size: 50,
+                                      color: Colors.redAccent,
+                                    ),
                                   ),
                                 ),
                               ),
