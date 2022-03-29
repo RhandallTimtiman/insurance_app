@@ -75,4 +75,26 @@ class PaymentService implements IPayment {
       rethrow;
     }
   }
+
+  @override
+  Future submitInsuranceTransaction({payload, serviceRoleId}) async {
+    _dio.options.headers = <String, dynamic>{
+      "requiresToken": true,
+      "x-service-role": serviceRoleId,
+    };
+    try {
+      var path = '/otm/api/v1/transactions/insurance/container-insurance';
+
+      var uri = Uri.https(ApiRoutes.transaction, path);
+
+      Response response = await _dio.postUri(uri, data: jsonDecode(payload));
+
+      if (response.statusCode == 200) {
+        var body = response.data;
+        return body;
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
