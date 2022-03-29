@@ -30,8 +30,8 @@ class _ReservationDetailsScreenState extends State<ReservationDetailsScreen> {
     return GetBuilder<ReservationDetailsController>(
       builder: (_) {
         return Scaffold(
-          appBar: const MainAppBar(
-            title: Text(
+          appBar: MainAppBar(
+            title: const Text(
               '',
               style: TextStyle(
                 fontSize: 15,
@@ -39,6 +39,9 @@ class _ReservationDetailsScreenState extends State<ReservationDetailsScreen> {
                 color: Colors.white,
               ),
             ),
+            onBackPress: () {
+              Get.offAllNamed('/list');
+            },
           ),
           backgroundColor: const Color.fromRGBO(
             2,

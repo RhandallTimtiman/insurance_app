@@ -62,8 +62,6 @@ class PaymentService implements IPayment {
       if (response.statusCode == 200) {
         var body = response.data;
 
-        inspect(body);
-
         var computedRates = ComputedRates.fromJson(body['data']);
 
         return computedRates;
@@ -77,21 +75,30 @@ class PaymentService implements IPayment {
   }
 
   @override
-  Future submitInsuranceTransaction({payload, serviceRoleId}) async {
+  Future<AccountPayableReceivable> submitInsuranceTransaction({
+    required payload,
+    required serviceRoleId,
+  }) async {
     _dio.options.headers = <String, dynamic>{
       "requiresToken": true,
       "x-service-role": serviceRoleId,
     };
+
     try {
       var path = '/otm/api/v1/transactions/insurance/container-insurance';
 
       var uri = Uri.https(ApiRoutes.transaction, path);
 
-      Response response = await _dio.postUri(uri, data: jsonDecode(payload));
+      Response response = await _dio.postUri(uri, data: jsonEncode(payload));
 
       if (response.statusCode == 200) {
         var body = response.data;
-        return body;
+
+        var arap = AccountPayableReceivable.fromJson(body['data']);
+
+        return arap;
+      } else {
+        return AccountPayableReceivable();
       }
     } catch (e) {
       rethrow;

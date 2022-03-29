@@ -10,5 +10,8 @@ abstract class IPayment {
     payload,
   });
 
-  Future submitInsuranceTransaction({payload, serviceRoleId});
+  Future<AccountPayableReceivable> submitInsuranceTransaction({
+    required payload,
+    required serviceRoleId,
+  });
 }

@@ -13,12 +13,14 @@ class PaymentOptionScreen extends StatefulWidget {
   State<PaymentOptionScreen> createState() => _PaymentOptionScreenState();
 }
 
-class _PaymentOptionScreenState extends State<PaymentOptionScreen> {
+class _PaymentOptionScreenState extends State<PaymentOptionScreen>
+    with WidgetsBindingObserver {
   final PaymentController _paymentController = Get.find();
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance!.addObserver(this);
     WidgetsBinding.instance?.addPostFrameCallback((_) {
       _paymentController.getPaymentProviders();
     });
@@ -28,7 +30,16 @@ class _PaymentOptionScreenState extends State<PaymentOptionScreen> {
   void dispose() {
     _paymentController.setSelectedPaymentProvider(PaymentProvider());
     _paymentController.setShowDetails(false);
+    WidgetsBinding.instance!.removeObserver(this);
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      Get.close(4);
+      Get.find<ReservationDetailsController>().getReservationDetails();
+    }
   }
 
   @override

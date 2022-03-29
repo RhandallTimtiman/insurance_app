@@ -1,7 +1,10 @@
+import 'dart:async';
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:insurance_app/app/domain/controller/controllers.dart';
 import 'package:insurance_app/app/domain/interface/interfaces.dart';
 import 'package:insurance_app/app/domain/model/models.dart';
@@ -95,6 +98,37 @@ class PaymentController extends GetxController {
   }
 
   void submitPayment() {
+    Get.dialog(
+      Dialog(
+        backgroundColor: Colors.white12,
+        child: SizedBox(
+          height: 100,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: const [
+                  CircularProgressIndicator(
+                    strokeWidth: 7.0,
+                    backgroundColor: Color.fromRGBO(244, 162, 64, 1),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    "Please wait...",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+      barrierDismissible: false,
+    );
+
     var reservationDetails =
         Get.find<ReservationDetailsController>().reservationDetails.value;
     var selectedInsurance =
@@ -277,8 +311,7 @@ class PaymentController extends GetxController {
           .seaFreightTicket?.consignee!.addressDetails?.countryId,
       'consigneeCountryCode': null,
       'consigneeCountryName': null,
-      'notifyPartyIds':
-          reservationDetails.notifyPartyIds?.split(','), //np details
+      'notifyPartyIds': reservationDetails.notifyPartyIds, //np details
       'notifyPartyNames': notifyPartyNames!.join(','),
       'shipmentDate':
           null, // shipment details // not available on inbound booking so set this to null
@@ -327,7 +360,7 @@ class PaymentController extends GetxController {
       'paymentProviderName': selectedPaymentProvider.providerName,
       'paymentProviderPrefix': selectedPaymentProvider
           .providerPrefix, //should be provider code instead of providerPrefix as per sir Rupert
-      'paymentProviderProductId': selectedPaymentProvider.providerGuid,
+      'paymentProviderProductId': selectedPaymentProvider.productId,
       'paymentProviderProductGuid': selectedPaymentProvider.productGuid,
       'paymentProviderProductName': selectedPaymentProvider.productName,
       'paymentTypeId': selectedPaymentProvider.paymentTypeId,
@@ -342,16 +375,45 @@ class PaymentController extends GetxController {
       'payorContactNumber':
           '${reservationDetails.seaFreightTicket?.bookingParty?.contactDetails?.mobilePrefix}${reservationDetails.seaFreightTicket?.bookingParty?.contactDetails?.mobile}',
       'redirectUrl':
-          null, // if this value is replaced, kindly inform BE since this is being used in Upay payment
+          'google.com', // if this value is replaced, kindly inform BE since this is being used in Upay payment
       'chargeFee': computedRate.convenienceFee,
       'platformFee': computedRate.platformFee
     };
-    inspect(payload);
+
     _paymentService
         .submitInsuranceTransaction(
-            payload: payload,
-            serviceRoleId:
-                Get.find<ProfileController>().company.value.serviceId)
-        .then((value) => null);
+      payload: payload,
+      serviceRoleId: Get.find<ProfileController>().company.value.service,
+    )
+        .then((value) async {
+      Get.back();
+
+      Get.snackbar(
+        'Success',
+        'Container insurance created successfull!',
+        colorText: Colors.white,
+        backgroundColor: Colors.green[500],
+        duration: const Duration(
+          seconds: 2,
+        ),
+      );
+
+      Timer(const Duration(milliseconds: 1000), () async {
+        var whiteLabelUrl = value.paymentResponse["data"]["whiteLabelUrl"];
+
+        await launch(whiteLabelUrl);
+      });
+    }).catchError((e) {
+      inspect(e);
+      Get.snackbar(
+        'Something Went Wrong!',
+        e.message,
+        backgroundColor: Colors.red[400],
+        colorText: Colors.white,
+        duration: const Duration(
+          seconds: 2,
+        ),
+      );
+    });
   }
 }
