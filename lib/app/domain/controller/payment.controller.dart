@@ -348,5 +348,11 @@ class PaymentController extends GetxController {
       'platformFee': computedRate.platformFee
     };
     inspect(payload);
+    _paymentService
+        .submitInsuranceTransaction(
+            payload: payload,
+            serviceRoleId:
+                Get.find<ProfileController>().company.value.serviceId)
+        .then((value) => null);
   }
 }

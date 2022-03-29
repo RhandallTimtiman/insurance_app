@@ -9,4 +9,6 @@ abstract class IPayment {
   Future<ComputedRates> computeCpfRates({
     payload,
   });
+
+  Future submitInsuranceTransaction({payload, serviceRoleId});
 }
