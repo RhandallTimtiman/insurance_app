@@ -70,8 +70,8 @@ class ReservationDetails {
   String? commodityName;
   bool? isDangerousCargo;
   dynamic hsCode;
-  String? eta;
-  String? etd;
+  dynamic eta;
+  dynamic etd;
   String? lct;
   dynamic specialInstruction;
   dynamic termsOfPayment;
@@ -246,8 +246,8 @@ class ReservationDetails {
     commodityName = json['commodityName'];
     isDangerousCargo = json['isDangerousCargo'];
     hsCode = json['hsCode'];
-    eta = json['eta'];
-    etd = json['etd'];
+    eta = json['eta'] != null ? DateTime.tryParse(json['eta']) : null;
+    etd = json['etd'] != null ? DateTime.tryParse(json['etd']) : null;
     lct = json['lct'];
     specialInstruction = json['specialInstruction'];
     termsOfPayment = json['termsOfPayment'];

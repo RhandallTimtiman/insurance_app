@@ -1,6 +1,8 @@
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:insurance_app/app/domain/controller/controllers.dart';
 import 'package:insurance_app/app/domain/interface/interfaces.dart';
 import 'package:insurance_app/app/domain/model/models.dart';
@@ -113,6 +115,64 @@ class PaymentController extends GetxController {
         .map((e) => e.companyName)
         .toList();
 
+    var tempContainers = reservationDetails.containers!.map((e) => e).toList();
+
+    var insuredContainers = selectedInsurance.containerRateList?.containerRates
+        ?.map((e) => e)
+        .toList();
+
+    var containerPayload = [];
+
+    for (var tContainers in tempContainers) {
+      for (var iContainers in insuredContainers!) {
+        if (tContainers.typeId == iContainers.containerTypeGuid &&
+            tContainers.sizeId == iContainers.containerSizeGuid) {
+          var hasFound = containerPayload
+              .indexWhere((cp) => cp["containerId"] == tContainers.containerId);
+
+          if (hasFound == -1) {
+            containerPayload.add(
+              {
+                "containerId": tContainers.containerId,
+                "containerTypeGuid": tContainers.typeId,
+                "containerTypeName": tContainers.type,
+                "containerSizeGuid": tContainers.sizeId,
+                "containerSizeName": tContainers.size,
+                "qty": tContainers.quantity,
+                "ownership": tContainers.ownership,
+                "packagingQuantity": tContainers.packagingQuantity,
+                "weight": tContainers.weight,
+                "weightUnitOfMeasurementId":
+                    tContainers.weightUnitOfMeasurementId,
+                "volumeUnitOfMeasurementId":
+                    tContainers.volumeUnitOfMeasurementId,
+                "volume": tContainers.volume,
+                "dimensionsUnitOfMeasurementId":
+                    tContainers.dimensionsUnitOfMeasurementId,
+                "dimensionLength": tContainers.dimensionLength,
+                "dimensionWidth": tContainers.dimensionWidth,
+                "dimensionHeight": tContainers.dimensionHeight,
+                "reeferTemperature": tContainers.reeferTemperature,
+                "reeferTemperatureUnitOfMeasurementId":
+                    tContainers.reeferTemperatureUnitOfMeasurementId,
+                "packagingTypeId": tContainers.packagingTypeId,
+                "packagingType": tContainers.packagingType,
+                "containerNumber": tContainers.containerNumber,
+                "sealNumber": tContainers.sealNumber,
+                "loadType": tContainers.loadType,
+                "declaredValue": 0,
+                "gpsUnitNumber": null,
+              },
+            );
+          }
+        }
+      }
+    }
+
+    var format = DateFormat('MMMM d, yyyy hh:mm:ss a');
+
+    var dateFormatted = format.format(reservationDetails.eta);
+
     var payload = {
       'reservationId': reservationDetails.reservationId, //insurance provider
       'productTypeGuid': selectedInsurance.productTypeGuid,
@@ -121,14 +181,14 @@ class PaymentController extends GetxController {
       'providerGuid': selectedInsurance.guid,
       'providerCode': selectedInsurance.code,
       'providerName': selectedInsurance.name,
-      'ProviderImage': selectedInsurance.imgUrl,
-      'ProviderAddressLine': selectedInsurance.address,
-      'ProviderLandline':
+      'providerImage': selectedInsurance.imgUrl,
+      'providerAddressLine': selectedInsurance.address,
+      'providerLandline':
           '${selectedInsurance.landLinePrefix}${selectedInsurance.landLine}',
-      'ProviderFax':
+      'providerFax':
           '${selectedInsurance.faxNumberPrefix}${selectedInsurance.faxNumber}',
-      'ProviderCountryCode': selectedInsurance.countryCode,
-      'ProviderCountryName': selectedInsurance.country,
+      'providerCountryCode': selectedInsurance.countryCode,
+      'providerCountryName': selectedInsurance.country,
       'bookingPartyId': reservationDetails.bookingPartyId, //booking party
       'bookingPartyName': reservationDetails.bookingParty,
       'bookingPartyImage': reservationDetails.bookingPartyImage,
@@ -223,7 +283,7 @@ class PaymentController extends GetxController {
       'notifyPartyNames': notifyPartyNames!.join(','),
       'shipmentDate':
           null, // shipment details // not available on inbound booking so set this to null
-      'eta': reservationDetails.eta,
+      'eta': dateFormatted,
       'etd': null, // not available on inbound booking so set this to null
       'origin': reservationDetails.loadingAddress,
       'originAddress': reservationDetails.loadingAddress,
@@ -243,7 +303,7 @@ class PaymentController extends GetxController {
       'hsCode': reservationDetails.hsCode,
       'hsDescription':
           reservationDetails.commodityDescription, //non editable hs desc
-      'containerList': '',
+      'containerList': containerPayload,
       'payerId': reservationDetails.bookingPartyId, //booking party id
       'receiverId': selectedInsurance.guid, //selected insurance provider
       'paymentOptionId': 1, //set to default 1 (prepaid) as per sir Jaycee
@@ -258,7 +318,7 @@ class PaymentController extends GetxController {
           .bookingPartyCurrencyCode, // should be payor's currency code
       'documentUrl': null,
       'paidAmount': selectedInsurance.containerRateList?.totalPublishedAmount,
-      'paymentDate': DateTime.now().toString(),
+      'paymentDate': DateTime.now().toUtc().toString(),
       'remarks': null,
       'currencyName': null,
       'currencyLeftSymbol': null,
