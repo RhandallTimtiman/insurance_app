@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget title;
@@ -38,6 +39,18 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                 )
               : null
           : null,
+      actions: [
+        Padding(
+          padding: const EdgeInsets.only(right: 5),
+          child: GestureDetector(
+            onTap: () => Get.offAllNamed('/login'),
+            child: const Icon(
+              Icons.logout_sharp,
+              color: Colors.white, // add custom icons also
+            ),
+          ),
+        )
+      ],
     );
   }
 }
