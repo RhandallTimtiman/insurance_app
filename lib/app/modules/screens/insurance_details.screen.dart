@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:insurance_app/app/domain/controller/controllers.dart';
 import 'package:insurance_app/app/widgets/widgets.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class InsuranceDetailsScreen extends StatefulWidget {
   const InsuranceDetailsScreen({
@@ -302,10 +303,19 @@ class _InsuranceDetailsScreenState extends State<InsuranceDetailsScreen> {
                             height: 10,
                           ),
                           CheckboxListTile(
-                            title: const Text(
-                              "I agree with the terms and conditions",
-                              style: TextStyle(
-                                fontSize: 12,
+                            title: InkWell(
+                              onTap: () async {
+                                await launch(
+                                  'https://optimus-document-template-dev2.s3.ap-southeast-1.amazonaws.com/d914a5cc-3418-4d3e-bc44-5c5c0f3728f1XLOG_MASTER_POLICY_REFERENCE_2021.pdf',
+                                );
+                              },
+                              child: const Text(
+                                "I agree with the terms and conditions",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  decoration: TextDecoration.underline,
+                                  color: Colors.blue,
+                                ),
                               ),
                             ),
                             value: hasAgreedTerms,
