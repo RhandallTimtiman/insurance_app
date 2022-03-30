@@ -128,10 +128,8 @@ class _PaymentSummaryScreenState extends State<PaymentSummaryScreen> {
                                               milliseconds: 1000),
                                         ),
                                         errorWidget: (context, url, error) =>
-                                            const Icon(
-                                          Icons.error,
-                                          size: 50,
-                                          color: Colors.redAccent,
+                                            Image.asset(
+                                          'assets/images/noAvailCompanyImage.png',
                                         ),
                                       ),
                                     ),

@@ -398,11 +398,34 @@ class PaymentController extends GetxController {
         ),
       );
 
-      Timer(const Duration(milliseconds: 1000), () async {
-        var whiteLabelUrl = value.paymentResponse["data"]["whiteLabelUrl"];
+      switch (selectedPaymentProvider.productCode) {
+        case "W2WALT":
+          Get.snackbar(
+            'Success',
+            value.paymentResponse["message"],
+            colorText: Colors.white,
+            backgroundColor: Colors.green[500],
+            duration: const Duration(
+              seconds: 2,
+            ),
+          );
 
-        await launch(whiteLabelUrl);
-      });
+          Get.find<ReservationDetailsController>().getReservationDetails();
+
+          Timer(const Duration(milliseconds: 1000), () async {
+            Get.close(4);
+          });
+          break;
+
+        case "UPay":
+          Timer(const Duration(milliseconds: 1000), () async {
+            var whiteLabelUrl = value.paymentResponse["data"]["whiteLabelUrl"];
+
+            await launch(whiteLabelUrl);
+          });
+
+          break;
+      }
     }).catchError((e) {
       inspect(e);
       Get.snackbar(

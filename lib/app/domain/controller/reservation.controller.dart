@@ -99,4 +99,10 @@ class ReservationController extends GetxController {
       );
     });
   }
+
+  Future<void> pullToRefresh() async {
+    await getListOfReservation();
+    currentPage.value = 1;
+    update();
+  }
 }

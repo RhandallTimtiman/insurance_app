@@ -12,6 +12,7 @@ class SeaFreightTicket {
   BookingParty? bookingParty;
   BookingParty? shipper;
   List<NotifyParty>? notifyParties;
+  dynamic eventStatus;
 
   SeaFreightTicket({
     this.commodityDescription,
@@ -25,6 +26,7 @@ class SeaFreightTicket {
     this.bookingParty,
     this.shipper,
     this.notifyParties,
+    this.eventStatus,
   });
 
   SeaFreightTicket.fromJson(Map<String, dynamic> json) {
@@ -38,6 +40,7 @@ class SeaFreightTicket {
     bookingParty = BookingParty.fromJson(json['bookingParty']);
     consignee = BookingParty.fromJson(json['consignee']);
     shipper = BookingParty.fromJson(json['shipper']);
+
     if (json['notifyParties'] != null) {
       notifyParties = <NotifyParty>[];
       json['notifyParties'].forEach(
@@ -48,5 +51,7 @@ class SeaFreightTicket {
     } else {
       notifyParties = [];
     }
+
+    eventStatus = json['eventStatus'];
   }
 }

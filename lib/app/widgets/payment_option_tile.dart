@@ -101,10 +101,8 @@ class PaymentOptionTile extends StatelessWidget {
                         highlightColor: const Color(0xFFF5F5F5),
                         period: const Duration(milliseconds: 1000),
                       ),
-                      errorWidget: (context, url, error) => const Icon(
-                        Icons.error,
-                        size: 50,
-                        color: Colors.redAccent,
+                      errorWidget: (context, url, error) => Image.asset(
+                        'assets/images/noAvailCompanyImage.png',
                       ),
                     ),
                   ),

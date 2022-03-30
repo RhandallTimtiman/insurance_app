@@ -84,6 +84,9 @@ class ReservationDetails {
   late List<ContainerSummaryDetails>? containerSummary;
   late List<ContainerDetails>? containers;
   late List<ContainerDetails>? containerInsuranceNotBookedContainer;
+  late List<InsuranceTicket>? containerInsuranceTicket;
+  late List<TruckingServiceTicket>? truckingServiceTicket;
+  TransactionStatus? transactionStatus;
 
   ReservationDetails({
     this.id,
@@ -169,6 +172,9 @@ class ReservationDetails {
     this.containerSummary,
     this.containers,
     this.containerInsuranceNotBookedContainer,
+    this.containerInsuranceTicket,
+    this.truckingServiceTicket,
+    this.transactionStatus,
   });
 
   ReservationDetails.fromJson(Map<String, dynamic> json) {
@@ -257,6 +263,7 @@ class ReservationDetails {
     shippingLineImage = json['shippingLineImage'];
     seaFreightTicket = SeaFreightTicket.fromJson(json['seaFreightTicket']);
     containerOwnership = json['containerOwnership'];
+
     if (json['containerSummary'] != null) {
       containerSummary = <ContainerSummaryDetails>[];
       json['containerSummary'].forEach(
@@ -267,6 +274,7 @@ class ReservationDetails {
     } else {
       containerSummary = [];
     }
+
     if (json['containers'] != null) {
       containers = <ContainerDetails>[];
       json['containers'].forEach(
@@ -277,6 +285,7 @@ class ReservationDetails {
     } else {
       containers = [];
     }
+
     if (json['containerInsuranceNotBookedContainer'] != null) {
       containerInsuranceNotBookedContainer = <ContainerDetails>[];
       json['containerInsuranceNotBookedContainer'].forEach(
@@ -288,5 +297,29 @@ class ReservationDetails {
     } else {
       containerInsuranceNotBookedContainer = [];
     }
+
+    if (json['containerInsuranceTicket'] != null) {
+      containerInsuranceTicket = <InsuranceTicket>[];
+      json['containerInsuranceTicket'].forEach(
+        (v) {
+          containerInsuranceTicket!.add(InsuranceTicket.fromJson(v));
+        },
+      );
+    } else {
+      containerInsuranceTicket = [];
+    }
+
+    if (json['truckingServiceTicket'] != null) {
+      truckingServiceTicket = <TruckingServiceTicket>[];
+      json['truckingServiceTicket'].forEach(
+        (v) {
+          truckingServiceTicket!.add(TruckingServiceTicket.fromJson(v));
+        },
+      );
+    } else {
+      truckingServiceTicket = [];
+    }
+
+    transactionStatus = TransactionStatus.fromJson(json['transactionStatus']);
   }
 }

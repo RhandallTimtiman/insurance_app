@@ -22,3 +22,6 @@ export 'contact_details.model.dart';
 export 'address_details.model.dart';
 export 'notify_party.model.dart';
 export 'account_payable_receivable.model.dart';
+export 'insurance_ticket.model.dart';
+export 'trucking_service_ticket.model.dart';
+export 'transaction_status.model.dart';

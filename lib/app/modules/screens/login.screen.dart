@@ -22,19 +22,9 @@ class _LoginScreenState extends State<LoginScreen> {
           height: size.height,
           width: size.width,
           decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              stops: [
-                -0.026,
-                0.98,
-                1.0,
-              ],
-              begin: Alignment.bottomCenter,
-              end: Alignment.topCenter,
-              colors: [
-                Color(0xFF02276c),
-                Color(0xFFffffff),
-                Color(0xFFffffff),
-              ],
+            image: DecorationImage(
+              image: AssetImage('assets/images/loginBG.png'),
+              fit: BoxFit.cover,
             ),
           ),
           child: Column(

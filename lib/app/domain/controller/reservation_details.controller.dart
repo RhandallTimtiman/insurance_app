@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:insurance_app/app/domain/controller/controllers.dart';
 import 'package:insurance_app/app/domain/interface/interfaces.dart';
@@ -33,6 +36,7 @@ class ReservationDetailsController extends GetxController {
     _reservationService
         .getReservationDetails(reservationId: reservationId.value)
         .then((result) {
+      inspect(result);
       setIsLoading(false);
       setReservationDetails(result);
     }).catchError((e) {
@@ -85,5 +89,66 @@ class ReservationDetailsController extends GetxController {
 
     Get.find<InsuranceController>().setInsuredContainer(noDupes);
     Get.toNamed('/insurance-options');
+  }
+
+  Widget showButton() {
+    if (!isLoading.value) {
+      List<ContainerDetails> tempContainers = List.from(
+          reservationDetails.value.containers!.map((e) => e).toList());
+
+      var tempContainerInsuranceNotBooked = List.from(reservationDetails
+          .value.containerInsuranceNotBookedContainer!
+          .map((e) => e)
+          .toList());
+      if (tempContainers.isNotEmpty && tempContainers[0].ownership == "COC") {
+        if (reservationDetails.value.containerInsuranceTicket!.isNotEmpty) {
+          if (tempContainerInsuranceNotBooked.isNotEmpty) {
+            return actionButton();
+          }
+        } else {
+          return actionButton();
+        }
+      }
+    }
+    return const SizedBox.shrink();
+  }
+
+  Widget actionButton() {
+    return ElevatedButton(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(
+          const Color.fromRGBO(
+            2,
+            39,
+            108,
+            1,
+          ),
+        ),
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+      ),
+      child: Row(
+        children: const [
+          Text(
+            'Avail Insurance',
+            style: TextStyle(
+              fontSize: 15,
+            ),
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          Icon(
+            Icons.arrow_forward_ios_sharp,
+          ),
+        ],
+      ),
+      onPressed: () {
+        summarizeContainers();
+      },
+    );
   }
 }

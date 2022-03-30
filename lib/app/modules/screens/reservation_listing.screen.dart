@@ -77,80 +77,83 @@ class _ReservationListingScreenState extends State<ReservationListingScreen> {
                 ),
               );
             }
-            return ListView.separated(
-              separatorBuilder: (ctx, index) {
-                return const SizedBox(
-                  height: 20,
-                );
-              },
-              shrinkWrap: true,
-              itemCount: _.reservations.length,
-              itemBuilder: (ctx, index) {
-                if (index == _.reservations.length - 1) {
-                  return Column(
-                    children: [
-                      ReservationCard(
-                        reservation: _.reservations[index],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      SizedBox(
-                        width: 150,
-                        height: 50,
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
-                              const Color.fromRGBO(
-                                2,
-                                39,
-                                108,
-                                1,
-                              ),
-                            ),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              !_.isNextPageLoading.value
-                                  ? const Text(
-                                      'Load More',
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                      ),
-                                    )
-                                  : const CircularProgressIndicator(
-                                      strokeWidth: 7.0,
-                                      backgroundColor: Color.fromRGBO(
-                                        244,
-                                        162,
-                                        64,
-                                        1,
-                                      ),
-                                    ),
-                            ],
-                          ),
-                          onPressed: () {
-                            _.setNextPage();
-                          },
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                    ],
+            return RefreshIndicator(
+              onRefresh: () => _.pullToRefresh(),
+              child: ListView.separated(
+                separatorBuilder: (ctx, index) {
+                  return const SizedBox(
+                    height: 20,
                   );
-                }
-                return ReservationCard(
-                  reservation: _.reservations[index],
-                );
-              },
+                },
+                shrinkWrap: true,
+                itemCount: _.reservations.length,
+                itemBuilder: (ctx, index) {
+                  if (index == _.reservations.length - 1) {
+                    return Column(
+                      children: [
+                        ReservationCard(
+                          reservation: _.reservations[index],
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        SizedBox(
+                          width: 150,
+                          height: 50,
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                const Color.fromRGBO(
+                                  2,
+                                  39,
+                                  108,
+                                  1,
+                                ),
+                              ),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                !_.isNextPageLoading.value
+                                    ? const Text(
+                                        'Load More',
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                        ),
+                                      )
+                                    : const CircularProgressIndicator(
+                                        strokeWidth: 7.0,
+                                        backgroundColor: Color.fromRGBO(
+                                          244,
+                                          162,
+                                          64,
+                                          1,
+                                        ),
+                                      ),
+                              ],
+                            ),
+                            onPressed: () {
+                              _.setNextPage();
+                            },
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                      ],
+                    );
+                  }
+                  return ReservationCard(
+                    reservation: _.reservations[index],
+                  );
+                },
+              ),
             );
           },
         ),
