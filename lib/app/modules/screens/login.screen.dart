@@ -127,7 +127,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Material(
                   elevation: 5.0,
                   borderRadius: BorderRadius.circular(10.0),
-                  color: const Color.fromRGBO(244, 190, 11, 1),
+                  color: const Color.fromRGBO(
+                    2,
+                    39,
+                    108,
+                    1,
+                  ),
                   child: MaterialButton(
                     minWidth: size.width,
                     onPressed: () => authController.signIn(),

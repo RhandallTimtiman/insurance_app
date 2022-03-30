@@ -335,7 +335,7 @@ class _ReservationDetailsScreenState extends State<ReservationDetailsScreen> {
                                                       width: 5,
                                                     ),
                                                     SizedBox(
-                                                      width: 200,
+                                                      width: 175,
                                                       child: Text(
                                                         getCurrentEvent(_
                                                                 .reservationDetails
@@ -372,8 +372,8 @@ class _ReservationDetailsScreenState extends State<ReservationDetailsScreen> {
                                   ),
                                 ),
                                 // ignore: prefer_is_empty
-                                _.reservationDetails.value.truckingServiceTicket
-                                            ?.length !=
+                                _.reservationDetails.value
+                                            .truckingServiceTicket!.length !=
                                         0
                                     ? Column(
                                         children: _.reservationDetails.value
@@ -445,7 +445,7 @@ class _ReservationDetailsScreenState extends State<ReservationDetailsScreen> {
                                                                     width: 5,
                                                                   ),
                                                                   SizedBox(
-                                                                    width: 200,
+                                                                    width: 175,
                                                                     child: Text(
                                                                       tst.truckingCompanyName ??
                                                                           'N / A',
@@ -590,7 +590,7 @@ class _ReservationDetailsScreenState extends State<ReservationDetailsScreen> {
                                                                     width: 5,
                                                                   ),
                                                                   SizedBox(
-                                                                    width: 200,
+                                                                    width: 175,
                                                                     child: Text(
                                                                       cit.providerName ??
                                                                           'N / A',

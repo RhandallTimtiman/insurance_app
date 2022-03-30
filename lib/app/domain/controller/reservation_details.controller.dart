@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:insurance_app/app/domain/controller/controllers.dart';
@@ -34,6 +36,7 @@ class ReservationDetailsController extends GetxController {
     _reservationService
         .getReservationDetails(reservationId: reservationId.value)
         .then((result) {
+      inspect(result);
       setIsLoading(false);
       setReservationDetails(result);
     }).catchError((e) {

@@ -320,6 +320,10 @@ class ReservationDetails {
       truckingServiceTicket = [];
     }
 
-    transactionStatus = TransactionStatus.fromJson(json['transactionStatus']);
+    if (json['transactionStatus'] != null) {
+      transactionStatus = TransactionStatus.fromJson(json['transactionStatus']);
+    } else {
+      transactionStatus = TransactionStatus();
+    }
   }
 }
