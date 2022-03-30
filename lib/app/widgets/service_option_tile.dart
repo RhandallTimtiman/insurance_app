@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -37,7 +35,6 @@ class ServiceOptionTile extends StatelessWidget {
                   future:
                       GlobalService().presignImage(imageUrl: service.imageURL),
                   builder: ((context, snapshot) {
-                    inspect(snapshot.data);
                     if (snapshot.hasData) {
                       return SizedBox(
                         width: 100,

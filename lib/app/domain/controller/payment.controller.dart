@@ -83,8 +83,6 @@ class PaymentController extends GetxController {
           .totalPublishedAmount,
     };
 
-    inspect(payload);
-
     _paymentService
         .computeCpfRates(
       payload: payload,

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:insurance_app/app/core/constants/api.routes.dart';
 import 'package:insurance_app/app/core/utils/api.interceptor.dart';
@@ -28,16 +26,12 @@ class ProfileService implements IProfile {
 
       Response response = await _dio.getUri(uri);
 
-      inspect(response);
-
       if (response.statusCode == 200) {
         var body = response.data;
 
         var temp = body["data"]["profile"]["company"];
 
         var company = Company.fromJson(temp);
-
-        inspect(company);
 
         return company;
       } else {

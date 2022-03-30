@@ -91,8 +91,6 @@ class PaymentService implements IPayment {
 
       Response response = await _dio.postUri(uri, data: jsonEncode(payload));
 
-      inspect(response);
-
       if (response.statusCode == 200) {
         var body = response.data;
 

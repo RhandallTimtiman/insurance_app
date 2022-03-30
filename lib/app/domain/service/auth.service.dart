@@ -20,7 +20,7 @@ class AuthService implements IAuth {
 
     try {
       var uri = Uri.https(ApiRoutes.auth, 'auth/api/v1/auth/login');
-      inspect(uri);
+
       Response response = await _dio.postUri(
         uri,
         data: {
@@ -28,7 +28,7 @@ class AuthService implements IAuth {
           'Password': password,
         },
       );
-      inspect(response);
+
       if (response.statusCode == 200) {
         var body = response.data;
         var authResult = body['data']['cognito']['authenticationResult'];
@@ -68,8 +68,6 @@ class AuthService implements IAuth {
 
     final result = await dbHelper.queryTokenTable();
 
-    inspect(result);
-
     try {
       var uri = Uri.https(ApiRoutes.auth, '/api/auth/refresh-token');
 
@@ -80,7 +78,6 @@ class AuthService implements IAuth {
           'refreshToken': result.first['refreshToken'],
         },
       );
-      inspect(response);
 
       if (response.statusCode == 200) {
         var body = response.data;
