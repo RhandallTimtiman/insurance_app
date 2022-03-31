@@ -236,6 +236,23 @@ class _InsuranceDetailsScreenState extends State<InsuranceDetailsScreen> {
                                                 .containerRateList!
                                                 .containerRates![i],
                                           ),
+                                        for (var j = 0;
+                                            j <
+                                                _
+                                                    .selectedInsuranceProvider
+                                                    .value
+                                                    .containerRateList!
+                                                    .containerListNoRates!
+                                                    .length;
+                                            j++)
+                                          ContainerTile(
+                                            isNotInsured: true,
+                                            containerRate: _
+                                                .selectedInsuranceProvider
+                                                .value
+                                                .containerRateList!
+                                                .containerListNoRates![j],
+                                          ),
                                         Divider(
                                           color: Colors.grey[500],
                                         ),
@@ -363,7 +380,13 @@ class _InsuranceDetailsScreenState extends State<InsuranceDetailsScreen> {
                   ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(
-                        hasAgreedTerms
+                        hasAgreedTerms &&
+                                _
+                                    .selectedInsuranceProvider
+                                    .value
+                                    .containerRateList!
+                                    .containerRates!
+                                    .isNotEmpty
                             ? const Color.fromRGBO(
                                 2,
                                 39,
@@ -395,7 +418,11 @@ class _InsuranceDetailsScreenState extends State<InsuranceDetailsScreen> {
                       ],
                     ),
                     onPressed: () {
-                      hasAgreedTerms ? _.processContainerSummary() : null;
+                      hasAgreedTerms &&
+                              _.selectedInsuranceProvider.value
+                                  .containerRateList!.containerRates!.isNotEmpty
+                          ? _.processContainerSummary()
+                          : null;
                     },
                   ),
                 ],

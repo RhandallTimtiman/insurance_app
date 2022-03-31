@@ -3,10 +3,12 @@ import 'package:insurance_app/app/domain/model/models.dart';
 
 class ContainerTile extends StatelessWidget {
   final ContainerRate containerRate;
+  final bool isNotInsured;
 
   const ContainerTile({
     Key? key,
     required this.containerRate,
+    this.isNotInsured = false,
   }) : super(key: key);
 
   @override
@@ -68,9 +70,17 @@ class ContainerTile extends StatelessWidget {
                               height: 5,
                             ),
                             Text(
-                              '${containerRate.publishedCurrencyCode} ${containerRate.publishedRateAmount}',
-                              style: const TextStyle(
+                              !isNotInsured
+                                  ? '${containerRate.publishedCurrencyCode} ${containerRate.publishedRateAmount}'
+                                  : 'No available rates',
+                              style: TextStyle(
                                 fontSize: 12,
+                                color: !isNotInsured
+                                    ? Colors.black
+                                    : Colors.redAccent,
+                                fontWeight: !isNotInsured
+                                    ? FontWeight.normal
+                                    : FontWeight.bold,
                               ),
                             ),
                           ],
@@ -92,9 +102,17 @@ class ContainerTile extends StatelessWidget {
                               height: 5,
                             ),
                             Text(
-                              '${containerRate.publishedCurrencyCode} ${containerRate.totalAmount}',
-                              style: const TextStyle(
+                              !isNotInsured
+                                  ? '${containerRate.publishedCurrencyCode} ${containerRate.totalAmount}'
+                                  : 'No available rates',
+                              style: TextStyle(
                                 fontSize: 12,
+                                color: !isNotInsured
+                                    ? Colors.black
+                                    : Colors.redAccent,
+                                fontWeight: !isNotInsured
+                                    ? FontWeight.normal
+                                    : FontWeight.bold,
                               ),
                             ),
                           ],

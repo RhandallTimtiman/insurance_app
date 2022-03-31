@@ -50,7 +50,20 @@ class ServiceOptionTile extends StatelessWidget {
                           placeholderBuilder: (BuildContext context) =>
                               Container(
                             padding: const EdgeInsets.all(30.0),
-                            child: const CircularProgressIndicator(),
+                            child: const CircularProgressIndicator(
+                              backgroundColor: const Color.fromRGBO(
+                                2,
+                                39,
+                                108,
+                                1,
+                              ),
+                              color: const Color.fromRGBO(
+                                237,
+                                108,
+                                77,
+                                1,
+                              ),
+                            ),
                           ),
                         ),
                       );

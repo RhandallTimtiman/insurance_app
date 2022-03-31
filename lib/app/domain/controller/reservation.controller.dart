@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:insurance_app/app/domain/controller/controllers.dart';
@@ -14,6 +16,12 @@ class ReservationController extends GetxController {
   RxBool isNextPageLoading = false.obs;
 
   RxInt currentPage = 1.obs;
+
+  TextEditingController searchText = TextEditingController();
+
+  RxString previousKeyword = ''.obs;
+
+  Timer? _timer;
 
   setListOfReservation(value) {
     reservations.value = value;
@@ -51,6 +59,7 @@ class ReservationController extends GetxController {
 
     _reservationService
         .getReservationList(
+      query: query,
       bookingPartyId: Get.find<ProfileController>().company.value.companyId,
     )
         .then((result) {
@@ -80,6 +89,7 @@ class ReservationController extends GetxController {
 
     _reservationService
         .getReservationList(
+      query: query,
       bookingPartyId: Get.find<ProfileController>().company.value.companyId,
       pageNumber: pageNumber,
     )
@@ -101,8 +111,30 @@ class ReservationController extends GetxController {
   }
 
   Future<void> pullToRefresh() async {
+    searchText.text = '';
     await getListOfReservation();
     currentPage.value = 1;
     update();
+  }
+
+  filterReservation(String filter) {
+    _timer?.cancel();
+
+    if (filter.isNotEmpty && filter != previousKeyword.value) {
+      previousKeyword.value = filter;
+      update();
+
+      _timer = Timer(Duration(milliseconds: 1000), () async {
+        await getListOfReservation(
+            query: 'serviceType:inbound,reservationId:$filter');
+        currentPage.value = 1;
+        update();
+      });
+    }
+  }
+
+  clearFilter() {
+    searchText.text = '';
+    pullToRefresh();
   }
 }

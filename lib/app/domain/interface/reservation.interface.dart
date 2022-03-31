@@ -3,7 +3,7 @@ import 'package:insurance_app/app/domain/model/models.dart';
 abstract class IReservation {
   Future<List<Reservation>> getReservationList({
     required bookingPartyId,
-    String query = 'serviceType:inbound',
+    required query,
     int pageNumber = 1,
     int pageSize = 10,
     int timezoneOffset = 8,

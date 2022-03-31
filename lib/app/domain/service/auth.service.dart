@@ -32,6 +32,7 @@ class AuthService implements IAuth {
       if (response.statusCode == 200) {
         var body = response.data;
         var authResult = body['data']['cognito']['authenticationResult'];
+
         Map<String, dynamic> row = {
           'accessToken': authResult['accessToken'],
           'refreshToken': authResult['refreshToken'],

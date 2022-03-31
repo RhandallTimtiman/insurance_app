@@ -284,10 +284,16 @@ class _PaymentOptionScreenState extends State<PaymentOptionScreen>
                               children: const [
                                 CircularProgressIndicator(
                                   strokeWidth: 7.0,
-                                  backgroundColor: Color.fromRGBO(
-                                    244,
-                                    162,
-                                    64,
+                                  backgroundColor: const Color.fromRGBO(
+                                    2,
+                                    39,
+                                    108,
+                                    1,
+                                  ),
+                                  color: const Color.fromRGBO(
+                                    237,
+                                    108,
+                                    77,
                                     1,
                                   ),
                                 ),

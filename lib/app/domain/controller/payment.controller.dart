@@ -56,7 +56,9 @@ class PaymentController extends GetxController {
     setIsLoading(true);
 
     _paymentService.getListOfPaymentProvider().then((result) async {
-      setPaymentProviders(result);
+      var filtered = result.where((pp) => pp.productCode != 'UBBILLS').toList();
+
+      setPaymentProviders(filtered);
       setIsLoading(false);
     }).catchError((e) {
       setIsLoading(false);
@@ -109,7 +111,18 @@ class PaymentController extends GetxController {
                 children: const [
                   CircularProgressIndicator(
                     strokeWidth: 7.0,
-                    backgroundColor: Color.fromRGBO(244, 162, 64, 1),
+                    backgroundColor: const Color.fromRGBO(
+                      2,
+                      39,
+                      108,
+                      1,
+                    ),
+                    color: const Color.fromRGBO(
+                      237,
+                      108,
+                      77,
+                      1,
+                    ),
                   ),
                   SizedBox(
                     height: 10,
@@ -386,27 +399,29 @@ class PaymentController extends GetxController {
         .then((value) async {
       Get.back();
 
-      Get.snackbar(
-        'Success',
-        'Container insurance created successfull!',
-        colorText: Colors.white,
-        backgroundColor: Colors.green[500],
-        duration: const Duration(
-          seconds: 2,
-        ),
-      );
-
       switch (selectedPaymentProvider.productCode) {
         case "W2WALT":
-          Get.snackbar(
-            'Success',
-            value.paymentResponse["message"],
-            colorText: Colors.white,
-            backgroundColor: Colors.green[500],
-            duration: const Duration(
-              seconds: 2,
-            ),
-          );
+          if (value.paymentResponse["statusCode"] == 200) {
+            Get.snackbar(
+              'Success',
+              value.paymentResponse["message"],
+              colorText: Colors.white,
+              backgroundColor: Colors.green[500],
+              duration: const Duration(
+                seconds: 2,
+              ),
+            );
+          } else {
+            Get.snackbar(
+              'Error',
+              value.paymentResponse["message"],
+              colorText: Colors.white,
+              backgroundColor: Colors.red[400],
+              duration: const Duration(
+                seconds: 2,
+              ),
+            );
+          }
 
           Get.find<ReservationDetailsController>().getReservationDetails();
 

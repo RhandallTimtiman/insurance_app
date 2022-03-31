@@ -36,7 +36,18 @@ class AuthController extends GetxController {
                   children: const [
                     CircularProgressIndicator(
                       strokeWidth: 7.0,
-                      backgroundColor: Color.fromRGBO(244, 162, 64, 1),
+                      backgroundColor: const Color.fromRGBO(
+                        2,
+                        39,
+                        108,
+                        1,
+                      ),
+                      color: const Color.fromRGBO(
+                        237,
+                        108,
+                        77,
+                        1,
+                      ),
                     ),
                     SizedBox(
                       height: 10,
@@ -92,9 +103,16 @@ class AuthController extends GetxController {
         }
       }).catchError((error) {
         Get.back();
+
+        String message = error.response != null
+            ? error.response.data["message"]
+            : error.message;
+
+        var wasInvalid = message.contains('Invalid Credentials');
+
         Get.snackbar(
           'Something Went Wrong!',
-          error.message,
+          wasInvalid ? 'Invalid credentials' : error.message,
           backgroundColor: Colors.red[400],
           colorText: Colors.white,
           duration: const Duration(
