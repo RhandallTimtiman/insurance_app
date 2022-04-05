@@ -120,11 +120,12 @@ class _ReservationListingScreenState extends State<ReservationListingScreen> {
                                           const SizedBox(
                                             height: 20,
                                           ),
-                                          SizedBox(
-                                            width: 150,
-                                            height: 50,
-                                            child: _.searchText.text.length == 0
-                                                ? ElevatedButton(
+                                          (_.currentPage.value <
+                                                  _.totalPage.value)
+                                              ? SizedBox(
+                                                  width: 150,
+                                                  height: 50,
+                                                  child: ElevatedButton(
                                                     style: ButtonStyle(
                                                       backgroundColor:
                                                           MaterialStateProperty
@@ -172,15 +173,14 @@ class _ReservationListingScreenState extends State<ReservationListingScreen> {
                                                                   64,
                                                                   1,
                                                                 ),
-                                                              ),
+                                                              )
                                                       ],
                                                     ),
                                                     onPressed: () {
                                                       _.setNextPage();
                                                     },
-                                                  )
-                                                : SizedBox.shrink(),
-                                          ),
+                                                  ))
+                                              : SizedBox.shrink(),
                                           const SizedBox(
                                             height: 20,
                                           ),

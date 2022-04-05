@@ -1,7 +1,7 @@
 import 'package:insurance_app/app/domain/model/models.dart';
 
 abstract class IReservation {
-  Future<List<Reservation>> getReservationList({
+  Future<ResponseReservation> getReservationList({
     required bookingPartyId,
     required query,
     int pageNumber = 1,

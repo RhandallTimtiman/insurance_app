@@ -25,3 +25,4 @@ export 'account_payable_receivable.model.dart';
 export 'insurance_ticket.model.dart';
 export 'trucking_service_ticket.model.dart';
 export 'transaction_status.model.dart';
+export 'response_reservation.model.dart';
