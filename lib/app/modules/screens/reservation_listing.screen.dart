@@ -192,21 +192,22 @@ class _ReservationListingScreenState extends State<ReservationListingScreen> {
                                     );
                                   },
                                 )
-                              : Expanded(
-                                  flex: 1,
-                                  child: Center(
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: const [
-                                        Text(
+                              : Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: const [
+                                    Expanded(
+                                      flex: 1,
+                                      child: Center(
+                                        child: Text(
                                           "No Reservations Found",
                                           style: TextStyle(
                                             color: Colors.black,
                                           ),
                                         ),
-                                      ],
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                 ),
                         ),
                       ),

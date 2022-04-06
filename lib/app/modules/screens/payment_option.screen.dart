@@ -142,7 +142,9 @@ class _PaymentOptionScreenState extends State<PaymentOptionScreen>
                                 const SizedBox(
                                   height: 30,
                                 ),
-                                _.showDetails.value
+                                _.showDetails.value &&
+                                        _.selectedProvider.value.productCode !=
+                                            'W2WALT'
                                     ? Card(
                                         child: Container(
                                           padding: const EdgeInsets.all(8),
@@ -275,6 +277,160 @@ class _PaymentOptionScreenState extends State<PaymentOptionScreen>
                                         ),
                                       )
                                     : const SizedBox.shrink(),
+                                _.showDetails.value &&
+                                        !_.isGetWalletLoading.value &&
+                                        _.selectedProvider.value.productCode ==
+                                            'W2WALT'
+                                    ? Card(
+                                        child: Container(
+                                          padding: const EdgeInsets.all(8),
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              SizedBox(
+                                                width: 150,
+                                                height: 150,
+                                                child: Material(
+                                                  elevation: 10,
+                                                  child: CachedNetworkImage(
+                                                    imageUrl: _.selectedProvider
+                                                        .value.productImageUrl
+                                                        .toString(),
+                                                    fit: BoxFit.contain,
+                                                    placeholder:
+                                                        (context, url) =>
+                                                            Shimmer.fromColors(
+                                                      child: const SizedBox(
+                                                        height: 80,
+                                                        width: 80,
+                                                        child: DecoratedBox(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: Colors.grey,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      baseColor: const Color(
+                                                          0xFFE0E0E0),
+                                                      enabled: true,
+                                                      highlightColor:
+                                                          const Color(
+                                                              0xFFF5F5F5),
+                                                      period: const Duration(
+                                                          milliseconds: 1000),
+                                                    ),
+                                                    errorWidget: (
+                                                      context,
+                                                      url,
+                                                      error,
+                                                    ) =>
+                                                        Image.asset(
+                                                      'assets/images/noAvailCompanyImage.png',
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                width: 15,
+                                              ),
+                                              Expanded(
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      'Pay to: ${Get.find<InsuranceController>().selectedInsuranceProvider.value.name}',
+                                                      style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                      maxLines: 2,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    const Text(
+                                                      'Outstanding Invoice Amount:',
+                                                      style: TextStyle(
+                                                        fontSize: 11,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 2,
+                                                    ),
+                                                    Text(
+                                                      '${Get.find<InsuranceController>().selectedInsuranceProvider.value.currencyCode} ${_.computedRates.value.invoiceAmount}',
+                                                      style: const TextStyle(
+                                                        fontSize: 11,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    const Text(
+                                                      'Available Balance:',
+                                                      style: TextStyle(
+                                                        fontSize: 11,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 2,
+                                                    ),
+                                                    Text(
+                                                      '${Get.find<InsuranceController>().selectedInsuranceProvider.value.currencyCode} ${_.userWallet.value.availableBalance}',
+                                                      style: const TextStyle(
+                                                        fontSize: 11,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 7,
+                                                    ),
+                                                    const Text(
+                                                      'Platform Fee:',
+                                                      style: TextStyle(
+                                                        fontSize: 11,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 2,
+                                                    ),
+                                                    Text(
+                                                      '${Get.find<InsuranceController>().selectedInsuranceProvider.value.currencyCode} ${_.computedRates.value.platformFee}',
+                                                      style: const TextStyle(
+                                                        fontSize: 11,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 7,
+                                                    ),
+                                                    const Text(
+                                                      'Convenience Fee:',
+                                                      style: TextStyle(
+                                                        fontSize: 11,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      '${Get.find<InsuranceController>().selectedInsuranceProvider.value.currencyCode} ${_.computedRates.value.convenienceFee}',
+                                                      style: const TextStyle(
+                                                        fontSize: 11,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      )
+                                    : const SizedBox.shrink(),
                               ],
                             ),
                           )
@@ -339,43 +495,7 @@ class _PaymentOptionScreenState extends State<PaymentOptionScreen>
                             ),
                           ),
                         ),
-                        ElevatedButton(
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
-                              const Color.fromRGBO(
-                                2,
-                                39,
-                                108,
-                                1,
-                              ),
-                            ),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                            ),
-                          ),
-                          child: Row(
-                            children: const [
-                              Text(
-                                'Pay Now',
-                                style: TextStyle(
-                                  fontSize: 15,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Icon(
-                                Icons.arrow_forward_ios_sharp,
-                              ),
-                            ],
-                          ),
-                          onPressed: () {
-                            _.submitPayment();
-                          },
-                        ),
+                        _.actionButton(),
                       ],
                     ),
                   )

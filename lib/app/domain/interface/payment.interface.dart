@@ -14,4 +14,10 @@ abstract class IPayment {
     required payload,
     required serviceRoleId,
   });
+
+  Future<List<UserWallet>> getUserWallet({
+    required payeeId,
+    required payorId,
+    currencyCode = "PHP",
+  });
 }

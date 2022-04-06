@@ -17,11 +17,15 @@ class PaymentController extends GetxController {
 
   RxBool isLoading = true.obs;
 
+  RxBool isGetWalletLoading = true.obs;
+
   final selectedProvider = PaymentProvider().obs;
 
   RxBool showDetails = false.obs;
 
   final computedRates = ComputedRates().obs;
+
+  final userWallet = UserWallet().obs;
 
   setPaymentProviders(value) {
     paymentProviders.value = value;
@@ -42,13 +46,29 @@ class PaymentController extends GetxController {
     selectedProvider.value = value;
     update();
 
+    inspect(value);
+
     if (value.productGuid != null) {
       await computeCpfRates();
+    }
+
+    if (value.productCode == 'W2WALT') {
+      await getEWalletDetails();
     }
   }
 
   setComputedRates(ComputedRates value) {
     computedRates.value = value;
+    update();
+  }
+
+  setUserWallet(UserWallet value) {
+    userWallet.value = value;
+    update();
+  }
+
+  setIsGetWalletLoading(value) {
+    isGetWalletLoading.value = value;
     update();
   }
 
@@ -451,5 +471,96 @@ class PaymentController extends GetxController {
         ),
       );
     });
+  }
+
+  getEWalletDetails() async {
+    setIsGetWalletLoading(true);
+
+    _paymentService
+        .getUserWallet(
+            payeeId: Get.find<InsuranceController>()
+                .selectedInsuranceProvider
+                .value
+                .guid,
+            payorId: Get.find<ProfileController>().company.value.companyId,
+            currencyCode: Get.find<InsuranceController>()
+                .selectedInsuranceProvider
+                .value
+                .currencyCode)
+        .then((result) {
+      setIsGetWalletLoading(false);
+      if (result.isNotEmpty) {
+        setUserWallet(result[0]);
+      }
+    }).catchError((e) {
+      setIsGetWalletLoading(false);
+    });
+  }
+
+  Widget actionButton() {
+    if (showDetails.value && selectedProvider.value.productCode != 'W2WALT') {
+      return paymentButton();
+    }
+
+    if (showDetails.value &&
+        !isGetWalletLoading.value &&
+        selectedProvider.value.productCode == 'W2WALT') {
+      return paymentButton(
+        isDisabled: userWallet.value.availableBalance <=
+            computedRates.value.grandTotalAmount,
+      );
+    }
+    return SizedBox.shrink();
+  }
+
+  Widget paymentButton({isDisabled = false}) {
+    return ElevatedButton(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(
+          isDisabled
+              ? Colors.grey
+              : const Color.fromRGBO(
+                  2,
+                  39,
+                  108,
+                  1,
+                ),
+        ),
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+      ),
+      child: Row(
+        children: const [
+          Text(
+            'Pay Now',
+            style: TextStyle(
+              fontSize: 15,
+            ),
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          Icon(
+            Icons.arrow_forward_ios_sharp,
+          ),
+        ],
+      ),
+      onPressed: () {
+        isDisabled
+            ? Get.snackbar(
+                'Error',
+                'Insufficient balance. Please top-up your wallet first to continue. Go to your e-vault account and follow the "Top-up" instructions.',
+                backgroundColor: Colors.red[400],
+                colorText: Colors.white,
+                duration: const Duration(
+                  seconds: 2,
+                ),
+              )
+            : submitPayment();
+      },
+    );
   }
 }
