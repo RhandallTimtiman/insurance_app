@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,6 +17,7 @@ class ReservationController extends GetxController {
   RxBool isNextPageLoading = false.obs;
 
   RxInt currentPage = 1.obs;
+  RxInt totalPage = 1.obs;
 
   TextEditingController searchText = TextEditingController();
 
@@ -46,7 +48,15 @@ class ReservationController extends GetxController {
   setNextPage() async {
     currentPage.value = currentPage.value + 1;
     update();
-    await getNextListOfReservation(pageNumber: currentPage.value);
+    var filterStr = searchText.text;
+    await getNextListOfReservation(
+        pageNumber: currentPage.value,
+        query: 'serviceType:inbound,reservationId:$filterStr');
+  }
+
+  setTotalPage(value) {
+    totalPage.value = value;
+    update();
   }
 
   Future<void> getListOfReservation({
@@ -63,9 +73,12 @@ class ReservationController extends GetxController {
       bookingPartyId: Get.find<ProfileController>().company.value.companyId,
     )
         .then((result) {
-      setListOfReservation(result);
+      setListOfReservation(result.data);
+      setTotalPage(result.totalPage);
+
       setIsLoading(false);
     }).catchError((e) {
+      inspect(e);
       setIsLoading(false);
       Get.snackbar(
         'Error',
@@ -94,9 +107,11 @@ class ReservationController extends GetxController {
       pageNumber: pageNumber,
     )
         .then((result) {
-      addNewReservations(result);
+      addNewReservations(result.data);
+      setTotalPage(result.totalPage);
       setIsNextPageLoading(false);
     }).catchError((e) {
+      inspect(e);
       setIsNextPageLoading(false);
       Get.snackbar(
         'Error',
@@ -119,11 +134,9 @@ class ReservationController extends GetxController {
 
   filterReservation(String filter) {
     _timer?.cancel();
-
     if (filter.isNotEmpty && filter != previousKeyword.value) {
       previousKeyword.value = filter;
       update();
-
       _timer = Timer(Duration(milliseconds: 1000), () async {
         await getListOfReservation(
             query: 'serviceType:inbound,reservationId:$filter');

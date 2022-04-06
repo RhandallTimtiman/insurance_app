@@ -5,8 +5,7 @@ import 'package:insurance_app/app/core/constants/api.routes.dart';
 import 'package:insurance_app/app/core/utils/api.interceptor.dart';
 import 'package:insurance_app/app/core/utils/database.helper.dart';
 import 'package:insurance_app/app/domain/interface/interfaces.dart';
-import 'package:insurance_app/app/domain/model/reservation.model.dart';
-import 'package:insurance_app/app/domain/model/reservation_details.model.dart';
+import 'package:insurance_app/app/domain/model/models.dart';
 
 class ReservationService implements IReservation {
   final _dio = Dio()..interceptors.add(ApiInterceptor());
@@ -14,7 +13,7 @@ class ReservationService implements IReservation {
   final dbHelper = DatabaseHelper.instance;
 
   @override
-  Future<List<Reservation>> getReservationList({
+  Future<ResponseReservation> getReservationList({
     required bookingPartyId,
     required query,
     int pageNumber = 1,
@@ -46,14 +45,16 @@ class ReservationService implements IReservation {
       if (response.statusCode == 200) {
         var body = response.data;
 
-        List<Reservation> reservations = body['data'].map<Reservation>(
-          (dynamic item) {
-            return Reservation.fromJson(item);
-          },
-        ).toList();
-        return reservations;
+        // List<Reservation> reservations = body['data'].map<Reservation>(
+        //   (dynamic item) {
+        //     return Reservation.fromJson(item);
+        //   },
+        // ).toList();
+        ResponseReservation responseReservation =
+            ResponseReservation.fromJson(body);
+        return responseReservation;
       } else {
-        return [];
+        return ResponseReservation(data: [], totalPage: 1, currentPage: 1);
       }
     } catch (e) {
       inspect(e);
