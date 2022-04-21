@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:insurance_app/app/domain/controller/controllers.dart';
@@ -108,11 +110,15 @@ class AuthController extends GetxController {
             ? error.response.data["message"]
             : error.message;
 
+        message = message.contains('Http status error [400]')
+            ? 'Incorrect Username or Password'
+            : message;
+
         var wasInvalid = message.contains('Invalid Credentials');
 
         Get.snackbar(
           'Something Went Wrong!',
-          wasInvalid ? 'Invalid credentials' : error.message,
+          wasInvalid ? 'Invalid credentials' : message,
           backgroundColor: Colors.red[400],
           colorText: Colors.white,
           duration: const Duration(
