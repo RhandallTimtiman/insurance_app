@@ -401,6 +401,8 @@ class PaymentController extends GetxController {
       'paymentProviderProductImageUrl': selectedPaymentProvider.productImageUrl,
       'paymentInstruction': selectedPaymentProvider.instruction,
       'paymentProviderProductCode': selectedPaymentProvider.productCode,
+      'paymentProviderCountryId': selectedPaymentProvider.providerCountryId,
+      'paymentProviderCountryName': selectedPaymentProvider.providerCountryName,
       'payorEmailAddress':
           reservationDetails.seaFreightTicket?.bookingParty?.emailAddress,
       'payorContactNumber':

@@ -20,6 +20,8 @@ class PaymentProvider {
   dynamic localValue;
   dynamic foreignValue;
   bool? isPercentage;
+  dynamic providerCountryId;
+  dynamic providerCountryName;
 
   PaymentProvider({
     this.providerId,
@@ -43,6 +45,8 @@ class PaymentProvider {
     this.localValue,
     this.foreignValue,
     this.isPercentage,
+    this.providerCountryId,
+    this.providerCountryName,
   });
 
   PaymentProvider.fromJson(Map<String, dynamic> json) {
@@ -67,5 +71,7 @@ class PaymentProvider {
     localValue = json['localValue'];
     foreignValue = json['foreignValue'];
     isPercentage = json['isPercentage'];
+    providerCountryId = json['providerCountryId'];
+    providerCountryName = json['providerCountryName'];
   }
 }
