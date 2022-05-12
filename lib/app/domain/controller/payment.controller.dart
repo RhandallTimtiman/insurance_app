@@ -75,7 +75,18 @@ class PaymentController extends GetxController {
   getPaymentProviders() {
     setIsLoading(true);
 
-    _paymentService.getListOfPaymentProvider().then((result) async {
+    _paymentService
+        .getListOfPaymentProvider(
+      currencyCode: Get.find<ReservationDetailsController>()
+          .reservationDetails
+          .value
+          .bookingPartyCurrencyCode,
+      countryCode: Get.find<ReservationDetailsController>()
+          .reservationDetails
+          .value
+          .bookingPartyCountryCode,
+    )
+        .then((result) async {
       var filtered = result.where((pp) => pp.productCode != 'UBBILLS').toList();
 
       setPaymentProviders(filtered);
@@ -454,7 +465,7 @@ class PaymentController extends GetxController {
 
         case "UPay":
           Timer(const Duration(milliseconds: 1000), () async {
-            var whiteLabelUrl = value.paymentResponse["data"]["whiteLabelUrl"];
+            var whiteLabelUrl = value.paymentResponse["whiteLabelUrl"];
 
             await launch(whiteLabelUrl);
           });
@@ -463,6 +474,7 @@ class PaymentController extends GetxController {
       }
     }).catchError((e) {
       inspect(e);
+      Get.back();
       Get.snackbar(
         'Something Went Wrong!',
         e.message,
@@ -488,7 +500,9 @@ class PaymentController extends GetxController {
             currencyCode: Get.find<InsuranceController>()
                 .selectedInsuranceProvider
                 .value
-                .currencyCode)
+                .currencyCode,
+            reservationId:
+                Get.find<ReservationDetailsController>().reservationId.value)
         .then((result) {
       setIsGetWalletLoading(false);
       if (result.isNotEmpty) {

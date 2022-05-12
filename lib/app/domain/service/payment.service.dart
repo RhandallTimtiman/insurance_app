@@ -106,8 +106,12 @@ class PaymentService implements IPayment {
   }
 
   @override
-  Future<List<UserWallet>> getUserWallet(
-      {required payeeId, required payorId, currencyCode = "PHP"}) async {
+  Future<List<UserWallet>> getUserWallet({
+    required payeeId,
+    required payorId,
+    currencyCode = "PHP",
+    required reservationId,
+  }) async {
     _dio.options.headers = <String, dynamic>{
       "requiresToken": true,
     };
@@ -119,6 +123,7 @@ class PaymentService implements IPayment {
         "payeeCompanyId": payeeId,
         "payorCompanyId": payorId,
         "currencyCode": currencyCode,
+        "reservationNumber": reservationId,
       };
 
       var uri = Uri.https(ApiRoutes.transaction, path, queryParams);

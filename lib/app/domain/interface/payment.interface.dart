@@ -19,5 +19,6 @@ abstract class IPayment {
     required payeeId,
     required payorId,
     currencyCode = "PHP",
+    required reservationId,
   });
 }
