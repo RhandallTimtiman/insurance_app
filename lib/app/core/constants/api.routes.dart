@@ -1,6 +1,6 @@
 class ApiRoutes {
-  static String auth = 'auth-service-api.ppa.xlog.ph';
-  static String transaction = 'transaction-service-api.ppa.xlog.ph';
-  static String client = 'client-management-api.ppa.xlog.ph';
-  static String cms = 'global-cms-api.ppa.xlog.ph';
+  static String auth = 'auth-service-api.dev.ppacrms.com';
+  static String transaction = 'transaction-service-api.dev.ppacrms.com';
+  static String client = 'client-management-api.dev.ppacrms.com';
+  static String cms = 'global-cms-api.dev.ppacrms.com';
 }
