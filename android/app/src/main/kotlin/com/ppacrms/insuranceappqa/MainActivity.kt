@@ -1,4 +1,4 @@
-package com.example.insurance_app
+package com.ppacrms.insuranceappqa
 
 import io.flutter.embedding.android.FlutterActivity
 
